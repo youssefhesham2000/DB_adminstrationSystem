@@ -1,28 +1,71 @@
 package service;
 
 import model.Book;
+import model.BookCategory;
 
-import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookManager {
-    private DBConnection dbConnection;
+    private final DBConnection dbConnection;
 
     public BookManager(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
 
-    public boolean insertBook(Book book) {
+    public boolean insertBook(Book book) throws SQLException { // TODO: AUTHOR HANDLING
+        String query = "INSERT INTO BOOK(ISBN, title, publisherID, publicationYear, sellingPrice, category) VALUES " +
+                "(?,?,?,?,?,?)";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, book.ISBN);
+        statement.setString(2, book.title);
+        statement.setInt(3, book.publisherID);
+        statement.setInt(4, book.publicationYear);
+        statement.setDouble(5, book.sellingPrice);
+        statement.setInt(6, BookCategory.getCategoryIndex(book.category));
 
+        return statement.execute();
     }
 
-    public boolean updateBook(Book oldBook, Book newBook) {
+    public boolean updateBook(Book oldBook, Book newBook) throws SQLException {
+        String query = "UPDATE BOOK " +
+                "SET title=?, publisherID=?, publicationYear=?, sellingPrice=?, category=? " +
+                "WHERE ISBN=?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, newBook.title);
+        statement.setInt(2, newBook.publisherID);
+        statement.setInt(3, newBook.publicationYear);
+        statement.setDouble(4, newBook.sellingPrice);
+        statement.setInt(5, BookCategory.getCategoryIndex(newBook.category));
+        statement.setString(6, oldBook.ISBN);
 
+        return statement.execute();
     }
 
-    public List<Book> searchBy(String fieldName) {
+    public List<Book> searchByTitle(String title) throws SQLException {
+        String query = "SELECT * FROM BOOK WHERE title LIKE ?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, "%" + title + "%");
+        ResultSet resultSet = statement.executeQuery();
 
+        List<Book> bookList = new ArrayList<>();
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
     }
 
+    public List<Book> getAllBooks(int startingIndex) throws SQLException {
+        String query = "SELECT * FROM BOOK LIMIT ?,10";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setInt(1, startingIndex);
+        ResultSet resultSet = statement.executeQuery();
+        List<Book> bookList = new ArrayList<>();
 
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
+    }
 }

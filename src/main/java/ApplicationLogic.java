@@ -16,6 +16,7 @@ public class ApplicationLogic {
     private ApplicationLogic() {}
 
     public void initializeApplication(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
         userManager = new UserManager(dbConnection);
         bookManager = new BookManager(dbConnection);
         cartManager = new CartManager(dbConnection);
@@ -33,7 +34,7 @@ public class ApplicationLogic {
     }
 
     public boolean logout() {
-
+        cartManager.deleteUserCartItems(loggedInUser);
     }
 
 

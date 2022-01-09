@@ -8,5 +8,8 @@ public class DBConnection {
         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SAMPLE18010078_18015026");
     }
 
+    public PreparedStatement getPreparedStatement(String SQLQuery) throws SQLException {
+        return connection.prepareStatement(SQLQuery);
+    }
 
 }
