@@ -25,7 +25,7 @@ public class BookManager {
         statement.setInt(3, book.publisherID);
         statement.setInt(4, book.publicationYear);
         statement.setDouble(5, book.sellingPrice);
-        statement.setInt(6, BookCategory.getCategoryIndex(book.category));
+        statement.setInt(6, book.category);
 
         return statement.execute();
     }
@@ -39,7 +39,7 @@ public class BookManager {
         statement.setInt(2, newBook.publisherID);
         statement.setInt(3, newBook.publicationYear);
         statement.setDouble(4, newBook.sellingPrice);
-        statement.setInt(5, BookCategory.getCategoryIndex(newBook.category));
+        statement.setInt(5, newBook.category);
         statement.setString(6, oldBook.ISBN);
 
         return statement.execute();
@@ -114,6 +114,19 @@ public class BookManager {
         return bookList;
     }
 
+    public ResultSet getTopTenBooks() throws SQLException {
+        String query = "SELECT * FROM topTenBooks";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet;
+    }
 
-
+    public double getTotalSales() throws SQLException {
+        String query = "SELECT SUM(totalPrice) AS total FROM BOOK_SALES";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next())
+            return resultSet.getDouble("total");
+        return 0;
+    }
 }

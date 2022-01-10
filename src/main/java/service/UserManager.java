@@ -123,4 +123,12 @@ public class UserManager {
 
         return statement.execute();
     }
+
+    public ResultSet genTopFiveCustomers() throws SQLException {
+        String query = "SELECT * FROM topFiveCustomers";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet;
+
+    }
 }

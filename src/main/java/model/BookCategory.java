@@ -18,6 +18,17 @@ public enum BookCategory {
         };
     }
 
+    public static String getBookCategoryText(int category) {
+        return switch (category) {
+            case 0 -> "Science";
+            case 1 -> "Art";
+            case 2 -> "Religion";
+            case 3 -> "History";
+            case 4 -> "Geography";
+            default -> null;
+        };
+    }
+
     public static int getCategoryIndex(BookCategory category) {
         return switch (category) {
             case SCIENCE -> 0;

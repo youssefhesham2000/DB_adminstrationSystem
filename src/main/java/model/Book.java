@@ -1,15 +1,27 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Book {
+public class Book implements Serializable {
     public String ISBN;
     public String title;
     public int publisherID;
     public int publicationYear;
     public double sellingPrice;
-    public BookCategory category;
+    public int category;
+
+    public Book(String ISBN, String title, int publisherID, int publicationYear, double sellingPrice, int category) {
+        this.ISBN = ISBN;
+        this.title = title;
+        this.publisherID = publisherID;
+        this.publicationYear = publicationYear;
+        this.sellingPrice = sellingPrice;
+        this.category = category;
+    }
+
+    public Book() {}
 
     public static Book getBookFromResult(ResultSet resultSet) throws SQLException {
         Book book = new Book();
@@ -18,9 +30,10 @@ public class Book {
         book.publisherID = resultSet.getInt("publisherID");
         book.publicationYear = resultSet.getInt("publicationYear");
         book.sellingPrice = resultSet.getDouble("sellingPrice");
-        book.category = BookCategory.getBookCategory(resultSet.getInt("category"));
+        book.category = resultSet.getInt("category");
         return book;
     }
+
 
     public String getISBN() {
         return ISBN;
@@ -62,11 +75,11 @@ public class Book {
         this.sellingPrice = sellingPrice;
     }
 
-    public BookCategory getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(BookCategory category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 }

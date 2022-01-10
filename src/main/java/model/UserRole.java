@@ -15,4 +15,8 @@ public enum UserRole {
         };
     }
 
+    public static String getUserRoleString(boolean userRole) {
+        return userRole ? "Manager" : "Customer";
+    }
+
 }

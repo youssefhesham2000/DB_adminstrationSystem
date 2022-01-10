@@ -24,7 +24,7 @@ public class GUIUtils {
         newBook.sellingPrice=Double.parseDouble(price);
         System.out.println(Category);
 //        sout(BookCategory.valueOf(Category.toUpperCase()));
-        newBook.category= BookCategory.valueOf(Category.toUpperCase());
+        newBook.category= BookCategory.getCategoryIndex(BookCategory.valueOf(Category.toUpperCase()));
         return newBook;
     }
     public String[]convertBookToStrings(Book book){
