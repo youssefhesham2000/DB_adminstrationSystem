@@ -2,6 +2,7 @@ package com.example.db_project;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
@@ -31,11 +32,20 @@ public class LoggedInUserController {
         }
     }
     public void cartButtonIsClicked(){
-
+        WindowChanger changer=new WindowChanger();
+        CartController controller=new CartController();
+        changer.changeWindow("Cart.fxml",controller);
     }
     public void profileButtonIsClicked(){
         WindowChanger changer =new WindowChanger();
         UserProfilePreviewController controller=new UserProfilePreviewController();
         changer.changeWindow("UserProfilePreview.fxml",controller);
+    }
+    public void logOutIsClicked(ActionEvent event){
+        //log out of system
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+        WindowChanger changer=new WindowChanger();
+        changer.changeWindow("hello-view.fxml",null);
+
     }
 }

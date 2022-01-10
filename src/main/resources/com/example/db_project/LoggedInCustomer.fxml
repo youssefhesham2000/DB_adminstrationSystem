@@ -49,7 +49,7 @@
                   <Insets top="28.0" />
                </HBox.margin>
             </MenuButton>
-            <Button mnemonicParsing="false" text="Cart">
+            <Button mnemonicParsing="false" onAction="#cartButtonIsClicked" text="Cart">
                <HBox.margin>
                   <Insets left="10.0" top="28.0" />
                </HBox.margin>
@@ -67,5 +67,10 @@
           <TableColumn prefWidth="75.0" />
         </columns>
       </TableView>
+      <Button fx:id="LogOutButton" mnemonicParsing="false" onAction="#logOutIsClicked" prefHeight="43.0" prefWidth="169.0" text="Log out" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="80.0" />
+         </GridPane.margin>
+      </Button>
    </children>
 </GridPane>

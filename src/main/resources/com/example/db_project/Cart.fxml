@@ -50,7 +50,7 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" text="purchase" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Button fx:id="purchaseButton" mnemonicParsing="false" onAction="#purchase" prefHeight="38.0" prefWidth="82.0" text="purchase" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin>

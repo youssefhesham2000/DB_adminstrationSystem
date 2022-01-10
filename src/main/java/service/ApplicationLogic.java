@@ -2,6 +2,8 @@ package service;
 
 import model.User;
 
+import java.sql.SQLException;
+
 public class ApplicationLogic {
 
     private static ApplicationLogic applicationLogic;
@@ -31,7 +33,11 @@ public class ApplicationLogic {
     }
 
     public boolean logout() {
-       // cartManager.deleteUserCartItems(loggedInUser);
+        try {
+            cartManager.deleteUserCartItems(loggedInUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
