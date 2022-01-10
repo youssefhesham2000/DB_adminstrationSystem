@@ -1,9 +1,6 @@
-import model.CartItem;
+package service;
+
 import model.User;
-import service.BookManager;
-import service.CartManager;
-import service.DBConnection;
-import service.UserManager;
 
 public class ApplicationLogic {
 
@@ -30,11 +27,12 @@ public class ApplicationLogic {
     }
 
     public boolean login(String email, String password) {
-
+    return false;
     }
 
     public boolean logout() {
-        cartManager.deleteUserCartItems(loggedInUser);
+       // cartManager.deleteUserCartItems(loggedInUser);
+        return false;
     }
 
 

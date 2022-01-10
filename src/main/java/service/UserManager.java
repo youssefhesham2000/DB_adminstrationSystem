@@ -57,7 +57,7 @@ public class UserManager {
     }
 
     public boolean promoteToManger(User user) {
-
+        return false;
     }
 
     public boolean placeOrder(Order order) throws SQLException {

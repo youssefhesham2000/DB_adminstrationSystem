@@ -1,5 +1,0 @@
-package com.example.db_project;
-
-public class LoggedInCustomerController {
-
-}
