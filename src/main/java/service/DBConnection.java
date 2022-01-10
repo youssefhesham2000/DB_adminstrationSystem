@@ -4,8 +4,8 @@ import java.sql.*;
 
 public class DBConnection {
     Connection connection;
-    public DBConnection() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://156.194.126.31:3306/ORDER_PROCESSING_SYSTEM",
+    public DBConnection(String url) throws SQLException {
+        connection = DriverManager.getConnection(url,
                 "SAMPLE",
                 "Root_Password123!");
     }

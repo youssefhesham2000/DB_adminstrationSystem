@@ -60,4 +60,11 @@ public class CartController {
         //get all cart objects and load it to table again
         utils.removeCartItemViewToTable("remove Item",cartTable,new CartController());
     }
+    public void increaseQuantity(CartItem selectedItem){
+        System.out.println(selectedItem.ISBN);
+        //update DB
+        cartTable.getItems().clear();
+        //get all cart objects and load it to table again
+        utils.removeCartItemToTable("remove Item",cartTable,new CartController());
+    }
 }

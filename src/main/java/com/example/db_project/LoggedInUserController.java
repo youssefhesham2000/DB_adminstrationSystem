@@ -128,7 +128,7 @@ public class LoggedInUserController {
 
     @FXML public void  getIntoManagerOptions(){
         WindowChanger changer=new WindowChanger();
-        changer.changeWindow("LoggedInManager.fxml",new ManagerController());
+        changer.changeWindow("LoggedInManager.fxml",null);
     }
 
     public  void AddToCart(Book selectedBook){

@@ -59,7 +59,7 @@ public class UserManager {
         return statement.execute();
     }
 
-    public boolean promoteToManger(User user) throws SQLException {
+    public boolean promoteToManager(User user) throws SQLException {
         String query = "UPDATE USER SET role=1 WHERE ID=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setInt(1, user.ID);
