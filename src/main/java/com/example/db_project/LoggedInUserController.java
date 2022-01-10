@@ -67,6 +67,7 @@ public class LoggedInUserController {
         setPageNumber(1);
         MenuItem source = (MenuItem) event.getSource();
         searchBy=source.getText();
+
         searchByMenu.setText(searchBy);
     }
 
@@ -94,6 +95,9 @@ public class LoggedInUserController {
                     break;
                 case "Publication year":
                     books = bookManager.searchBooksByPublicationYear(searchAtt, pageNumber);
+                    break;
+                case "Category":
+                    books = bookManager.searchBooksByCategory(searchAtt, pageNumber);
                     break;
                 default:
                     books = bookManager.getAllBooks(pageNumber);

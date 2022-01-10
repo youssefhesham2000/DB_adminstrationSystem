@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BookManager {
     private final DBConnection dbConnection;
@@ -56,7 +57,20 @@ public class BookManager {
             bookList.add(Book.getBookFromResult(resultSet));
         return bookList;
     }
+    public List<Book> searchBooksByCategory(String category, int pageNumber) throws SQLException {
+        String query = "SELECT * FROM BOOK  " +
+                "WHERE category = ? " +
+                "LIMIT ?,10";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setInt(1, BookCategory.getCategoryIndex(BookCategory.valueOf(category.toUpperCase())) );
+        statement.setInt(2, (pageNumber-1)*10);
+        ResultSet resultSet = statement.executeQuery();
 
+        List<Book> bookList = new ArrayList<>();
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
+    }
     public List<Book> searchBooksByAuthor(String authorName, int pageNumber) throws SQLException {
         String query = "SELECT B.* FROM BOOK B " +
                 "INNER JOIN BOOK_AUTHORS A ON B.ISBN=A.ISBN " +
