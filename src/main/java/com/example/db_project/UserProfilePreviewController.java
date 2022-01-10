@@ -29,11 +29,11 @@ public class UserProfilePreviewController {
     private TextField shippingAddress;
     @FXML
     public void initialize(){
-//        firstName.setText(logged.firstName);
-//        lastName.setText(logged.lastName);
-//        Email.setText(logged.email);
-//        phoneNumber.setText(logged.phoneNumber);
-//        shippingAddress.setText(logged.shippingAddress);
+      firstName.setText(logged.firstName);
+        lastName.setText(logged.lastName);
+        Email.setText(logged.email);
+        phoneNumber.setText(logged.phoneNumber);
+        shippingAddress.setText(logged.shippingAddress);
     }
 
     public void setStateChanged(){

@@ -8,13 +8,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.User;
+import model.UserRole;
+import service.ApplicationLogic;
+import service.UserManager;
 import service.UserValidator;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpController {
+    UserManager userManager= ApplicationLogic.getInstance().userManager;
     @FXML
     private TextField firstName;
     @FXML
@@ -43,8 +49,21 @@ public class SignUpController {
         boolean registered=false;
         if(validInputs){
             //check values and change registered to true and regieste the user
+            User newUser=new User();
+            newUser.email=email;
+            newUser.phoneNumber=number;
+            newUser.shippingAddress=Address;
+            newUser.firstName=FName;
+            newUser.lastName=LName;
+            newUser.role= UserRole.getUserRole(false);
+            try {
+                userManager.insertUser(newUser,Password);
+                registered=true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             //implement me
-            registered=true;
+
         }else{
             //show error msg
             changer.createMSGWindow("INValid inputs");
