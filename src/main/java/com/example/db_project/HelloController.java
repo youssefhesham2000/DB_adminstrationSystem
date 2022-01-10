@@ -62,8 +62,8 @@ public class HelloController {
             try {
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 Stage stage = new Stage();
-                FXMLLoader loggedInFxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoggedInCustomer.fxml"));
-                LoggedInCustomerController controller=new LoggedInCustomerController();
+                FXMLLoader loggedInFxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoggedInUser.fxml"));
+                LoggedInUserController controller=new LoggedInUserController();
                 loggedInFxmlLoader.setController(controller);
                 Scene scene = new Scene(loggedInFxmlLoader.load(), 200, 300);
                 stage.setTitle("welcome customer");

@@ -1,26 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="156.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="580.7999877929688" minWidth="10.0" prefWidth="535.2000122070312" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="64.79998779296875" />
   </columnConstraints>
   <rowConstraints>
+    <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="49.40000381469727" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="217.39999618530274" minHeight="10.0" prefHeight="217.39999618530274" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="ModifyAccountInformationButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Modify Account Information" />
-      <Button fx:id="SearchBooksButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Search Books" GridPane.rowIndex="1" />
-      <Button fx:id="manageShoppingcartButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="manage Shopping cart" GridPane.rowIndex="2" />
-      <Button fx:id="LogOutButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Log Out" GridPane.rowIndex="3" />
+      <HBox prefHeight="92.0" prefWidth="524.0">
+         <children>
+            <Button fx:id="searchButton" mnemonicParsing="false" text="Search">
+               <HBox.margin>
+                  <Insets right="10.0" top="28.0" />
+               </HBox.margin>
+            </Button>
+            <TextField fx:id="searchAttribute" alignment="CENTER" prefHeight="26.0" prefWidth="174.0">
+               <HBox.margin>
+                  <Insets top="28.0" />
+               </HBox.margin>
+            </TextField>
+            <MenuButton fx:id="searchByMenu" mnemonicParsing="false" prefHeight="26.0" prefWidth="141.0" text="Search By">
+              <items>
+                <MenuItem fx:id="Title" mnemonicParsing="false" onAction="#changeSearchBy" text="Title" />
+                <MenuItem fx:id="Author" mnemonicParsing="false" onAction="#changeSearchBy" text="Author" />
+                  <MenuItem fx:id="ISBN" mnemonicParsing="false" onAction="#changeSearchBy" text="ISBN" />
+                  <MenuItem fx:id="Publisher" mnemonicParsing="false" onAction="#changeSearchBy" text="Publisher" />
+                  <MenuItem fx:id="PublicationYear" mnemonicParsing="false" onAction="#changeSearchBy" text="Publication year" />
+                  <MenuItem fx:id="SellingPrice" mnemonicParsing="false" onAction="#changeSearchBy" text="Selling price" />
+                  <MenuItem fx:id="Category" mnemonicParsing="false" onAction="#changeSearchBy" text="Category" />
+              </items>
+               <HBox.margin>
+                  <Insets top="28.0" />
+               </HBox.margin>
+            </MenuButton>
+            <Button mnemonicParsing="false" onAction="#cartButtonIsClicked" text="Cart">
+               <HBox.margin>
+                  <Insets left="10.0" top="28.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#profileButtonIsClicked" text="Profile">
+               <HBox.margin>
+                  <Insets left="10.0" top="28.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <TableView fx:id="bookTable" prefHeight="218.0" prefWidth="533.0" GridPane.rowIndex="1">
+        <columns>
+          <TableColumn prefWidth="75.0" />
+          <TableColumn prefWidth="75.0" />
+        </columns>
+      </TableView>
+      <Button fx:id="LogOutButton" mnemonicParsing="false" onAction="#logOutIsClicked" prefHeight="43.0" prefWidth="169.0" text="Log out" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="80.0" />
+         </GridPane.margin>
+      </Button>
    </children>
 </GridPane>

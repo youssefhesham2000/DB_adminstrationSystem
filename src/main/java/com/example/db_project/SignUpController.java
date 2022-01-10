@@ -35,12 +35,7 @@ public class SignUpController {
         String FName=firstName.getText();
         String LName=lastName.getText();
         boolean validInputs=  checkFieldsCorrectness(email,Password,number,LName,FName,Address);
-        System.out.println(number.matches("[0-9]+"));
-        System.out.println(FName.matches("[a-zA-Z]+"));
-        System.out.println(email.matches("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$"));
-        System.out.println(LName.matches("[a-zA-Z]+"));
-        System.out.println( Address.matches("[a-zA-Z0-9]*"));
-        System.out.println(Password.length()>8);
+
 
         boolean registered=false;
         if(validInputs){
@@ -54,8 +49,6 @@ public class SignUpController {
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-                HelloController instance=new HelloController();
-                //fxmlLoader.setController(instance);
                 Scene scene = new Scene(fxmlLoader.load(), 500, 400);
                 stage.setTitle("Log In!");
                 stage.setScene(scene);

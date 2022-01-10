@@ -1,9 +1,8 @@
-import model.CartItem;
+package service;
+
 import model.User;
-import service.BookManager;
-import service.CartManager;
-import service.DBConnection;
-import service.UserManager;
+
+import java.sql.SQLException;
 
 public class ApplicationLogic {
 
@@ -30,11 +29,16 @@ public class ApplicationLogic {
     }
 
     public boolean login(String email, String password) {
-
+    return false;
     }
 
     public boolean logout() {
-        cartManager.deleteUserCartItems(loggedInUser);
+        try {
+            cartManager.deleteUserCartItems(loggedInUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 
