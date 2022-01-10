@@ -1,30 +1,5 @@
 USE ORDER_PROCESSING_SYSTEM;
 
-DROP PROCEDURE IF EXISTS getTotalSales;
-delimiter |
-CREATE PROCEDURE getTotalSales()
-  BEGIN
-    SELECT U.*, SUM(S.totalPrice) AS total
-    FROM BOOK_SALES S INNER JOIN USER U ON U.userID=S.userID
-    GROUP BY userID
-    ORDER BY total DESC
-    LIMIT 5;
-  END;
-|
-delimiter ;
-
-DROP PROCEDURE IF EXISTS topSellingBooks;
-delimiter |
-CREATE PROCEDURE topSellingBooks()
-  BEGIN
-    SELECT B.*, SUM(S.quantity) AS total
-    FROM BOOK_SALES S INNER JOIN BOOK B ON S.ISBN=B.ISBN
-    GROUP BY ISBN
-    ORDER BY total DESC
-    LIMIT 10;
-  END;
-|
-delimiter ;
 
 delimiter |
 CREATE PROCEDURE purchaseCart(IN USER_ID INT)
