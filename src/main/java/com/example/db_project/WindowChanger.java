@@ -13,7 +13,7 @@ public class WindowChanger {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(FXMLFile));
             if(controller!=null)
                 fxmlLoader.setController(controller);
-            Scene scene = new Scene(fxmlLoader.load(), 600, 500);
+            Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

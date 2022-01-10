@@ -1,5 +1,10 @@
 package service;
 
+import model.Book;
+
+import java.util.HashSet;
+import java.util.stream.Stream;
+
 public class UserValidator {
     public boolean checkFieldsCorrectness(String email,String password,String number,String LName,String FName,String Address){
         return  number.matches("[0-9]+") && FName.matches("[a-zA-Z]+")&& email.matches("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$")&&
@@ -10,5 +15,18 @@ public class UserValidator {
     }
     public boolean checkNumericOrLetters(String toCheck){
         return toCheck.matches("[a-zA-Z0-9]*");
+    }
+    public boolean checkLetters(String toCheck){
+        return toCheck.matches("[a-zA-Z]+");
+    }
+    public boolean isValidBook(String ISBN,String Title, String PublisherID,String PublicationYear,String Category){
+        return checkNumericOrLetters(ISBN)&&checkNumericOrLetters(Title)&&checkNumeric(PublisherID) &&
+                validateYear(PublicationYear)&&ValidateCategory(Category);
+    }
+    public boolean validateYear(String year){
+        return year.matches("[0-9]+")&& Integer.parseInt(year)>0;
+    }
+    public boolean ValidateCategory(String category){
+       return Stream.of("Science", "Art", "Religion", "History","Geography").anyMatch(category::equalsIgnoreCase);
     }
 }

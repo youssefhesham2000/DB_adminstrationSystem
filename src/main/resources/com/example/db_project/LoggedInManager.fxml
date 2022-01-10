@@ -44,7 +44,7 @@
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="addBookButton" mnemonicParsing="false" text="Add Book">
+            <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBookIsClicked" text="Add Book">
                <HBox.margin>
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>
