@@ -14,7 +14,8 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
-            DBConnection dbConnection = new DBConnection();
+            String url = "jdbc:mysql://156.194.126.31:3306/ORDER_PROCESSING_SYSTEM";
+            DBConnection dbConnection = new DBConnection(url);
             ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
             applicationLogic.initializeApplication(dbConnection);
         } catch (SQLException throwables) {
