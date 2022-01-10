@@ -49,6 +49,11 @@
                   <Insets right="10.0" top="50.0" />
                </HBox.margin>
             </TextField>
+            <TextField fx:id="threshold" promptText="Threshold">
+               <HBox.margin>
+                  <Insets right="10.0" top="50.0" />
+               </HBox.margin>
+            </TextField>
          </children>
       </HBox>
       <Button mnemonicParsing="false" onAction="#addBook" prefHeight="32.0" prefWidth="127.0" text="Add Books" GridPane.columnIndex="1">

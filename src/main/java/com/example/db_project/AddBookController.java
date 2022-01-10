@@ -16,6 +16,8 @@ public class AddBookController {
     @FXML
     private TextField bookISBN;
     @FXML
+    private TextField threshold;
+    @FXML
     private TextField bookTitle ;
     @FXML
     private TextField bookIPublisherID;
@@ -37,7 +39,7 @@ public class AddBookController {
             String PublicationYear=bookPublicationYear.getText();
             String Category=bookCategory.getText();
             String Price = bookPrice.getText();
-
+            String Threshold=threshold.getText();
             GUIUtils guiUtils = new GUIUtils();
 
             try {
