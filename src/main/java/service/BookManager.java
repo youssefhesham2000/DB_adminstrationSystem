@@ -57,6 +57,19 @@ public class BookManager {
             bookList.add(Book.getBookFromResult(resultSet));
         return bookList;
     }
+    public List<Book> searchBooksByPrice(Double price , int pageNumber) throws SQLException {
+        String query = "SELECT * FROM BOOK WHERE sellingPrice = ? LIMIT ?,10";
+
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setDouble(1, price);
+        statement.setInt(2, (pageNumber-1)*10);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Book> bookList = new ArrayList<>();
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
+    }
     public List<Book> searchBooksByCategory(String category, int pageNumber) throws SQLException {
         String query = "SELECT * FROM BOOK  " +
                 "WHERE category = ? " +

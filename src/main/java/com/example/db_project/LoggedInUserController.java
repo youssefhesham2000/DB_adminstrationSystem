@@ -10,6 +10,7 @@ import model.*;
 import service.ApplicationLogic;
 import service.BookManager;
 import service.CartManager;
+import service.UserManager;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,6 +20,7 @@ public class LoggedInUserController {
     ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
     BookManager bookManager = applicationLogic.bookManager;
     CartManager cartManager = applicationLogic.cartManager;
+    UserManager userManager= applicationLogic.userManager;
     User user = applicationLogic.loggedInUser;
 
 
@@ -99,6 +101,9 @@ public class LoggedInUserController {
                 case "Category":
                     books = bookManager.searchBooksByCategory(searchAtt, pageNumber);
                     break;
+                case "Selling price":
+                    books=bookManager.searchBooksByPrice(Double.parseDouble(searchAtt), pageNumber);
+                    break;
                 default:
                     books = bookManager.getAllBooks(pageNumber);
             }
@@ -123,6 +128,11 @@ public class LoggedInUserController {
     public void logOutIsClicked(ActionEvent event){
         //log out of system
         //implement me
+        try {
+            cartManager.deleteUserCartItems(user);
+        } catch (SQLException e) {
+            changer.createMSGWindow("log Out failed");
+        }
         ((Node)(event.getSource())).getScene().getWindow().hide();
         changer.changeWindow("hello-view.fxml",null);
 
