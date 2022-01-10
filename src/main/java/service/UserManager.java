@@ -16,8 +16,8 @@ public class UserManager {
     }
 
     public boolean insertUser(User user, String password) throws SQLException {
-        String query = "INSERT INTO USER(firstName, lastName, email, shippingAddress, phoneNumber, role) VALUES " +
-                "(?,?,?,?,?,?)";
+        String query = "INSERT INTO USER(firstName, lastName, email, shippingAddress, phoneNumber, password,role) VALUES " +
+                "(?,?,?,?,?,?,?)";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, user.firstName);
         statement.setString(2, user.lastName);

@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Book;
-import model.BookCategory;
-import model.CartItem;
-import model.User;
+import model.*;
 import service.ApplicationLogic;
 import service.BookManager;
 import service.CartManager;
@@ -57,7 +54,7 @@ public class LoggedInUserController {
         bookPrice.setCellValueFactory(new PropertyValueFactory<Book, Double>("sellingPrice"));
 
         utils.addTOCartButtonToTable("Add To Cart",bookTable,new LoggedInUserController());
-        boolean manager=true;
+        boolean manager= UserRole.getUserRoleIndex(user.role);
         if(!manager)
             managementButton.setVisible(false);
         else

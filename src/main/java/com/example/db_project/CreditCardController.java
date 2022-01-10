@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import model.User;
 import service.ApplicationLogic;
 import service.CartManager;
+import service.UserManager;
 
 import java.sql.SQLException;
 
@@ -18,6 +19,7 @@ public class CreditCardController {
     @FXML
     private DatePicker expiryDate;
     CartManager cartManager= ApplicationLogic.getInstance().cartManager;
+    UserManager userManager= ApplicationLogic.getInstance().userManager;
     User logged=ApplicationLogic.getInstance().loggedInUser;
     public void checkCreditCard(ActionEvent event){//need to connect this with the cart so it doesn't accept untill here is true
         long number=Long.valueOf(creditCardNumber.getText());
@@ -26,7 +28,7 @@ public class CreditCardController {
             //implement me
             //perform update on DB then clear user cart
             try {
-                cartManager.deleteUserCartItems(logged);
+                userManager.buyCart(logged);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
