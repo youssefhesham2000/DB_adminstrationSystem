@@ -19,13 +19,12 @@ public class HelloApplication extends Application {
             ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
             applicationLogic.initializeApplication(dbConnection);
 
-            applicationLogic.userManager.login("adel@shakal.com", "Password@1");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoggedInUser.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Library Administration System");
         stage.setScene(scene);
