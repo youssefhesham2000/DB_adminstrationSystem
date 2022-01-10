@@ -43,6 +43,7 @@ public class UserManager {
         statement.setBoolean(6, UserRole.getUserRoleIndex(newUser.role));
         statement.setInt(7, oldUser.ID);
 
+
         return statement.execute();
     }
 

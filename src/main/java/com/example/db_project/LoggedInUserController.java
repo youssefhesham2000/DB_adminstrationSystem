@@ -111,10 +111,12 @@ public class LoggedInUserController {
         CartController controller=new CartController();
         changer.changeWindow("Cart.fxml",controller);
     }
+
     public void profileButtonIsClicked(){
-        UserProfilePreviewController controller=new UserProfilePreviewController();
-        changer.changeWindow("UserProfilePreview.fxml",controller);
+        WindowChanger changer =new WindowChanger();
+        changer.changeWindow("UserProfilePreview.fxml",null);
     }
+
     public void logOutIsClicked(ActionEvent event){
         //log out of system
         //implement me
@@ -122,9 +124,10 @@ public class LoggedInUserController {
         changer.changeWindow("hello-view.fxml",null);
 
     }
-    public void  getIntoManagerOptions(){
 
-    changer.changeWindow("LoggedInManager.fxml",new ManagerController());
+    @FXML public void  getIntoManagerOptions(){
+        WindowChanger changer=new WindowChanger();
+        changer.changeWindow("LoggedInManager.fxml",new ManagerController());
     }
     public  void AddToCart(Book selectedBook){
         //implement me
