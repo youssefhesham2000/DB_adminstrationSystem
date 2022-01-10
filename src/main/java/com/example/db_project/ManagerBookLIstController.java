@@ -20,6 +20,8 @@ public class ManagerBookLIstController {
     public void initializer(){
         //implement me
         //get all books
+        GUIUtils utils =new GUIUtils();
+        //utils.addModifyBookButtonToTable("Modify Book",bookTable,new ManagerBookLIstController());
     }
     public void changeSearchBy(ActionEvent event){
         MenuItem source = (MenuItem) event.getSource();
@@ -32,5 +34,9 @@ public class ManagerBookLIstController {
             //call search function
             //implement me
         }
+    }
+    public void ModifyBook(Book selectedBook){
+        //implement me
+        System.out.println(selectedBook.ISBN);
     }
 }
