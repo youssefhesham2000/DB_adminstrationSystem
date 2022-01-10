@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import service.ApplicationLogic;
 import service.DBConnection;
+import service.UserManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,7 +20,8 @@ public class HelloApplication extends Application {
             ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
             applicationLogic.initializeApplication(dbConnection);
 
-            applicationLogic.userManager.login("adel@shakal.com", "Password@1");
+            applicationLogic.userManager.login("adel@shakal.com", "Password@1", 1);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -1,7 +1,3 @@
-USE ORDER_PROCESSING_SYSTEM;
-
-
-delimiter |
 CREATE PROCEDURE purchaseCart(IN USER_ID INT)
 
 -- TODO: check credit details
@@ -23,8 +19,22 @@ CREATE PROCEDURE purchaseCart(IN USER_ID INT)
     -- add each cart item to sales
     INSERT INTO BOOK_SALES(userID, totalPrice, quantity, date, ISBN)
     SELECT USER_ID, quantity*sellingPrice, quantity, NOW(), ISBN FROM USER_CART;
+    DELETE FROM CART as C WHERE C.userID = USER_ID;
     DROP TABLE USER_CART;
     COMMIT;
   END;
 |
 delimiter ;
+
+
+
+CREATE DEFINER=SAMPLE@% PROCEDURE AddBook(ISBN varchar(17) ,publisher_name varchar(45),title varchar(45),publication_year year,selling_price INT,category varchar(45),threshold int , authors varchar(45))
+BEGIN
+    declare publisher_id int;
+    set publisher_id = getPublisher(publisher_name);
+    SET autocommit = 0;
+    start transaction;
+        insert into book VALUES (ISBN,title,publication_year,selling_price,category);
+        insert into book_copies values (ISBN,threshold+10,threshold);
+    COMMIT;
+END

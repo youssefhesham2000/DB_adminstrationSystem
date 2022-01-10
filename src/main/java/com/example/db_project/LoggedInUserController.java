@@ -6,12 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Book;
-import model.BookCategory;
-import model.CartItem;
+import model.*;
 import service.ApplicationLogic;
 import service.BookManager;
 import service.CartManager;
+import service.UserManager;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,6 +20,8 @@ public class LoggedInUserController {
     ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
     BookManager bookManager = applicationLogic.bookManager;
     CartManager cartManager = applicationLogic.cartManager;
+    UserManager userManager= applicationLogic.userManager;
+    User user = applicationLogic.loggedInUser;
 
 
     private String searchBy="";
@@ -38,7 +39,6 @@ public class LoggedInUserController {
     @FXML private TableColumn<Book, String> bookAuthors;
     @FXML private TableColumn<Book, BookCategory> bookCategory;
     @FXML private TableColumn<Book, Double> bookPrice;
-    @FXML private TableColumn<Book, Void> addToCartButtons;
 
     int pageNumber = 1;
     @FXML Label pageNumberLabel;
@@ -56,7 +56,7 @@ public class LoggedInUserController {
         bookPrice.setCellValueFactory(new PropertyValueFactory<Book, Double>("sellingPrice"));
 
         utils.addTOCartButtonToTable("Add To Cart",bookTable,new LoggedInUserController());
-        boolean manager=true;
+        boolean manager= UserRole.getUserRoleIndex(user.role);
         if(!manager)
             managementButton.setVisible(false);
         else
@@ -69,6 +69,7 @@ public class LoggedInUserController {
         setPageNumber(1);
         MenuItem source = (MenuItem) event.getSource();
         searchBy=source.getText();
+
         searchByMenu.setText(searchBy);
     }
 
@@ -97,6 +98,12 @@ public class LoggedInUserController {
                 case "Publication year":
                     books = bookManager.searchBooksByPublicationYear(searchAtt, pageNumber);
                     break;
+                case "Category":
+                    books = bookManager.searchBooksByCategory(searchAtt, pageNumber);
+                    break;
+                case "Selling price":
+                    books=bookManager.searchBooksByPrice(Double.parseDouble(searchAtt), pageNumber);
+                    break;
                 default:
                     books = bookManager.getAllBooks(pageNumber);
             }
@@ -121,6 +128,11 @@ public class LoggedInUserController {
     public void logOutIsClicked(ActionEvent event){
         //log out of system
         //implement me
+        try {
+            cartManager.deleteUserCartItems(user);
+        } catch (SQLException e) {
+            changer.createMSGWindow("log Out failed");
+        }
         ((Node)(event.getSource())).getScene().getWindow().hide();
         changer.changeWindow("hello-view.fxml",null);
 
@@ -133,7 +145,7 @@ public class LoggedInUserController {
 
     public  void AddToCart(Book selectedBook){
         try {
-            cartManager.insertCartItem(new CartItem(1, selectedBook.ISBN, 1));
+            cartManager.insertCartItem(new CartItem(user.ID , selectedBook.ISBN, 1));
             AlertMessage.showConfirmation("\"" + selectedBook.title + "\" added successfully to cart");
 
         } catch (SQLException throwables) {

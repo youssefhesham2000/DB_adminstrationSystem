@@ -29,11 +29,11 @@ public class UserProfilePreviewController {
     private TextField shippingAddress;
     @FXML
     public void initialize(){
-//        firstName.setText(logged.firstName);
-//        lastName.setText(logged.lastName);
-//        Email.setText(logged.email);
-//        phoneNumber.setText(logged.phoneNumber);
-//        shippingAddress.setText(logged.shippingAddress);
+      firstName.setText(logged.firstName);
+        lastName.setText(logged.lastName);
+        Email.setText(logged.email);
+        phoneNumber.setText(logged.phoneNumber);
+        shippingAddress.setText(logged.shippingAddress);
     }
 
     public void setStateChanged(){
@@ -52,9 +52,11 @@ public class UserProfilePreviewController {
                 newUser.lastName = lastName.getText();
                 newUser.phoneNumber = phoneNumber.getText();
                 newUser.shippingAddress = shippingAddress.getText();
+                newUser.role=logged.role;
 
                 try {
                     userManager.updateUser(logged, newUser);
+                    changer.createMSGWindow("updated Sucessfuly");
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
@@ -67,6 +69,6 @@ public class UserProfilePreviewController {
         }
     }
     public void changePassword(){
-        changer.changeWindow("ChangePasswordPanel",new ChangePasswordController());
+        changer.changeWindow("ChangePasswordPanel.fxml",new ChangePasswordController());
     }
 }

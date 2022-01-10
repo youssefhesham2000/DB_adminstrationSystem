@@ -16,8 +16,8 @@ public class UserManager {
     }
 
     public boolean insertUser(User user, String password) throws SQLException {
-        String query = "INSERT INTO USER(firstName, lastName, email, shippingAddress, phoneNumber, role) VALUES " +
-                "(?,?,?,?,?,?)";
+        String query = "INSERT INTO USER(firstName, lastName, email, shippingAddress, phoneNumber, password,role) VALUES " +
+                "(?,?,?,?,?,?,?)";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, user.firstName);
         statement.setString(2, user.lastName);
@@ -59,14 +59,30 @@ public class UserManager {
         return statement.execute();
     }
 
-    public boolean promoteToManager(User user) throws SQLException {
-        String query = "UPDATE USER SET role=1 WHERE ID=?";
-        PreparedStatement statement = dbConnection.getPreparedStatement(query);
-        statement.setInt(1, user.ID);
+    public boolean promoteToManager(String email) throws SQLException {
+        if (!userEmailExists(email))
+            return false;
 
-        return statement.execute();
+        String query = "UPDATE USER SET role=1 WHERE email=?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, email);
+
+        statement.execute();
+        return true;
     }
 
+
+    public boolean userEmailExists(String email) throws SQLException{
+        String query = "SELECT COUNT(*) FROM USER WHERE email=?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, email);
+
+        ResultSet rs = statement.executeQuery();
+        rs.next();
+        int count = rs.getInt(1);
+        return count>0;
+
+    }
     public boolean placeOrder(Order order) throws SQLException {
         String query = "INSERT INTO LIBRARY_ORDER_DETAILS(ID, ISBN, quantity, requestTime, deliveryTime) VALUES " +
                 "(?,?,?,?,?)";
@@ -101,11 +117,12 @@ public class UserManager {
 
     }
 
-    public User login(String email, String password) throws SQLException {
-        String query = "SELECT * FROM USER WHERE email=? AND password=?";
+    public User login(String email, String password, Integer role) throws SQLException {
+        String query = "SELECT * FROM USER WHERE email=? AND password=? AND role=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, email);
         statement.setString(2, password);
+        statement.setInt(3, role);
         ResultSet resultSet = statement.executeQuery();
 
         User user = null;
