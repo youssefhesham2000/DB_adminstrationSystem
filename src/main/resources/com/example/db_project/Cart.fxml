@@ -22,7 +22,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <TableView fx:id="cartTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
         <columns>
           <TableColumn fx:id="ISBN" prefWidth="75.0" text="ISBN" />
           <TableColumn fx:id="Title" prefWidth="75.0" text="Title" />

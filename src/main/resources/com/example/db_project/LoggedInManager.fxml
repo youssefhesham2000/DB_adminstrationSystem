@@ -22,7 +22,7 @@
     <RowConstraints maxHeight="99.79996337890628" minHeight="10.0" prefHeight="44.600012207031284" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView prefHeight="251.0" prefWidth="479.0" GridPane.rowIndex="1">
+      <TableView fx:id="orderTable" prefHeight="251.0" prefWidth="479.0" GridPane.rowIndex="1">
         <columns>
           <TableColumn fx:id="orderID" prefWidth="75.0" text="Order ID" />
           <TableColumn fx:id="bookISBN" prefWidth="75.0" text="Book ISBN" />
@@ -45,11 +45,6 @@
                </HBox.margin>
             </Button>
             <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBookIsClicked" text="Add Book">
-               <HBox.margin>
-                  <Insets left="10.0" top="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="modifyBooks" mnemonicParsing="false" onAction="#enterModifyList" text="Modify Books">
                <HBox.margin>
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>

@@ -7,6 +7,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import model.Book;
+import model.CartItem;
+import model.Order;
 
 public class GUIUtils {
     public Book convertToBook(String ISBN, String Title, String PublisherID, String PublicationYear, String Category, String price){
@@ -50,6 +52,76 @@ public class GUIUtils {
                                     btn.setOnAction(event -> {
                                         Book book = getTableView().getItems().get(getIndex());
                                         Controller.AddToCart(book);
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        colBtn.setCellFactory(cellFactory);
+        table.getColumns().add(colBtn);
+
+    }
+    public void removeCartItemToTable(String textToDisplay, TableView<CartItem> table, CartController Controller) {
+        TableColumn<CartItem, String> colBtn = new TableColumn("Button Column");
+        Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>> cellFactory
+                = //
+                new Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<CartItem, String> param) {
+                        final TableCell<CartItem, String> cell = new TableCell<CartItem, String>() {
+
+                            final Button btn = new Button(textToDisplay);
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        CartItem Item = getTableView().getItems().get(getIndex());
+                                        Controller.removeFromCart(Item);
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        colBtn.setCellFactory(cellFactory);
+        table.getColumns().add(colBtn);
+
+    }
+    public void confirmOrderButtonToTable(String textToDisplay, TableView<Order> table, ManagerController Controller) {
+        TableColumn<Order, String> colBtn = new TableColumn("Button Column");
+        Callback<TableColumn<Order, String>, TableCell<Order, String>> cellFactory
+                = //
+                new Callback<TableColumn<Order, String>, TableCell<Order, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Order, String> param) {
+                        final TableCell<Order, String> cell = new TableCell<Order, String>() {
+
+                            final Button btn = new Button(textToDisplay);
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        Order order= getTableView().getItems().get(getIndex());
+                                        Controller.confirmOrder(order);
                                     });
                                     setGraphic(btn);
                                     setText(null);

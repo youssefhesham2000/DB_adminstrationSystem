@@ -53,7 +53,7 @@ public class LoggedInUserController {
         bookPrice.setCellValueFactory(new PropertyValueFactory<Book, Double>("sellingPrice"));
 
         utils.addTOCartButtonToTable("Add To Cart",bookTable,new LoggedInUserController());
-        boolean manager=false;
+        boolean manager=true;
         if(!manager)
             managementButton.setVisible(false);
         else
