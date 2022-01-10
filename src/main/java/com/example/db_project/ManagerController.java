@@ -6,12 +6,17 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Order;
+import model.User;
+import service.ApplicationLogic;
+import service.UserManager;
 import service.UserValidator;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class ManagerController {
     WindowChanger changer=new WindowChanger();
+    UserManager userManager = ApplicationLogic.getInstance().userManager;
     GUIUtils utils=new GUIUtils();
     @FXML
     private TextField emailToPromote;
@@ -25,18 +30,25 @@ public class ManagerController {
     private TableView<Order> orderTable;
     @FXML
     public void initialize(){
-
         utils.confirmOrderButtonToTable("Confirm Order",orderTable,new ManagerController());
     }
+
     @FXML
     public void promote(){
         String email=emailToPromote.getText();
-        boolean found=true;
-        //search for the email if found set found to true and promote it
-        //implement me
-        String msg =found?  "promoted" : "email not found";
 
-        changer.createMSGWindow(msg);
+        try {
+            boolean found = userManager.promoteToManager(email);
+
+            if (!found)
+                AlertMessage.showError("Email not found");
+            else AlertMessage.showConfirmation(email + " promoted");
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     public void addBookIsClicked(){
