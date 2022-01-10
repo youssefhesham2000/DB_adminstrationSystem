@@ -21,6 +21,7 @@ public class LoggedInUserController {
 
 
     private String searchBy="";
+    WindowChanger changer=new WindowChanger();
     @FXML private MenuButton searchByMenu;
     @FXML private TextField searchAttribute;
     @FXML private Button managementButton;
@@ -34,7 +35,7 @@ public class LoggedInUserController {
     @FXML private TableColumn<Book, String> bookAuthors;
     @FXML private TableColumn<Book, BookCategory> bookCategory;
     @FXML private TableColumn<Book, Double> bookPrice;
-    @FXML private TableColumn<Book, String> addToCartButtons;
+    @FXML private TableColumn<Book, Void> addToCartButtons;
 
     int pageNumber = 1;
     @FXML Label pageNumberLabel;
@@ -43,7 +44,7 @@ public class LoggedInUserController {
 
     @FXML
     public void initialize(){
-
+        GUIUtils utils=new GUIUtils();
         bookISBN.setCellValueFactory(new PropertyValueFactory<Book, String>("ISBN"));
         bookTitle.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
         bookPublicationYear.setCellValueFactory(new PropertyValueFactory<Book, Integer>("publicationYear"));
@@ -51,9 +52,12 @@ public class LoggedInUserController {
         bookCategory.setCellValueFactory(new PropertyValueFactory<Book, BookCategory>("category"));
         bookPrice.setCellValueFactory(new PropertyValueFactory<Book, Double>("sellingPrice"));
 
+        utils.addTOCartButtonToTable("Add To Cart",bookTable,new LoggedInUserController());
         boolean manager=true;
         if(!manager)
             managementButton.setVisible(false);
+        else
+            utils.addModifyBookButtonToTable("ModifyBook",bookTable,new LoggedInUserController());
 
         loadAllBooks();
     }
@@ -103,26 +107,39 @@ public class LoggedInUserController {
     }
 
     public void cartButtonIsClicked(){
-        WindowChanger changer=new WindowChanger();
+
         CartController controller=new CartController();
         changer.changeWindow("Cart.fxml",controller);
     }
+
     public void profileButtonIsClicked(){
         WindowChanger changer =new WindowChanger();
-        UserProfilePreviewController controller=new UserProfilePreviewController();
-        changer.changeWindow("UserProfilePreview.fxml",controller);
+        changer.changeWindow("UserProfilePreview.fxml",null);
     }
+
     public void logOutIsClicked(ActionEvent event){
         //log out of system
         //implement me
         ((Node)(event.getSource())).getScene().getWindow().hide();
-        WindowChanger changer=new WindowChanger();
         changer.changeWindow("hello-view.fxml",null);
 
     }
-    public void  getIntoManagerOptions(){
-    WindowChanger changer=new WindowChanger();
-    changer.changeWindow("LoggedInManager.fxml",new ManagerController());
+
+    @FXML public void  getIntoManagerOptions(){
+        WindowChanger changer=new WindowChanger();
+        changer.changeWindow("LoggedInManager.fxml",new ManagerController());
+    }
+    public  void AddToCart(Book selectedBook){
+        //implement me
+        //add to my cart
+        System.out.println(selectedBook.ISBN);
+    }
+    public void ModifyBook(Book selectedBook){
+        System.out.println(selectedBook.ISBN);
+        GUIUtils utils =new GUIUtils();
+        String results[]=utils.convertBookToStrings(selectedBook);
+        changer.changeWindow("ModifyBookPanel.fxml",new ModifyBookPanelController(results[0],results[1],results[2],results[3],results[4],results[5]));
+
     }
 
 

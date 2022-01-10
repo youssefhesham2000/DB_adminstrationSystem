@@ -79,7 +79,6 @@
                 <TableColumn fx:id="bookAuthors" prefWidth="100.0" text="Authors" />
                 <TableColumn fx:id="bookCategory" prefWidth="75.0" text="Category" />
                 <TableColumn fx:id="bookPrice" prefWidth="75.0" text="Price" />
-                <TableColumn fx:id="addToCartButtons" prefWidth="75.0" />
             </columns>
             <padding>
                 <Insets left="10.0" right="10.0" />

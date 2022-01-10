@@ -3,13 +3,16 @@ package com.example.db_project;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import model.Order;
 import service.UserValidator;
 
 import java.time.LocalDate;
 
 public class ManagerController {
     WindowChanger changer=new WindowChanger();
+    GUIUtils utils=new GUIUtils();
     @FXML
     private TextField emailToPromote;
     @FXML
@@ -18,7 +21,13 @@ public class ManagerController {
     private TextField orderQuantity ;
     @FXML
     private DatePicker DeliveryDate;
+    @FXML
+    private TableView<Order> orderTable;
+    @FXML
+    public void initialize(){
 
+        utils.confirmOrderButtonToTable("Confirm Order",orderTable,new ManagerController());
+    }
     @FXML
     public void promote(){
         String email=emailToPromote.getText();
@@ -29,9 +38,9 @@ public class ManagerController {
 
         changer.createMSGWindow(msg);
     }
+
     public void addBookIsClicked(){
         changer.changeWindow("AddBookPanel.fxml",new AddBookController());
-
     }
     public void placeOrderIsClicked(){
         UserValidator validator=new UserValidator();
@@ -53,11 +62,21 @@ public class ManagerController {
             changer.createMSGWindow("wrong attributes");
         }
     }
-    public void enterModifyList(){
+    /*public void enterModifyList(){
         changer.changeWindow("ManagerBookList.fxml",new ManagerBookLIstController());
-    }
+    }*/
     public void viewReportsIsClicked(){
         //handle jasper  report generator code here
         //implement me
+    }
+    public void confirmOrder(Order confirmedOrder){
+        System.out.println(confirmedOrder.ID);
+        //confirm order to DB
+        orderTable.getItems().clear();
+        //and re load orders data
+
+        utils.confirmOrderButtonToTable("Confirm Order",orderTable,new ManagerController());
+
+
     }
 }
