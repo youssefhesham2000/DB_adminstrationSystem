@@ -3,7 +3,10 @@ package com.example.db_project;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,15 +65,17 @@ public class CartController {
 
         utils.removeCartItemViewToTable("remove Item",cartTable,this);
         utils.insertIncreaseQuantityButtonToTable("Increase quantity", cartTable, this);
+
         double cartPrice=0;
         totalPrice.setText(Double.toString(cartPrice));
     }
-    public void purchase(){
+    public void purchase(ActionEvent event){
         WindowChanger changer=new WindowChanger();
         CreditCardController controller=new CreditCardController();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
         changer.changeWindow("CreditCardPanel.fxml",controller);
-        //implement me
-        //get items and perform update on DB then get the new cart
+
+
     }
 
 
@@ -106,11 +111,13 @@ public class CartController {
     }
 
 
+
     public void calculateTotalPrice(){
         double p = cartItems.
                 stream().
                 map(c -> c.price * c.quantity).mapToDouble(Double::doubleValue).sum();
         totalPrice.setText(String.valueOf(p));
+
     }
 
 

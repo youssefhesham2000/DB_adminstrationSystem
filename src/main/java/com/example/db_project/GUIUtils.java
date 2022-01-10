@@ -11,7 +11,10 @@ import model.BookCategory;
 import model.CartItemView;
 import model.Order;
 
+import java.util.Locale;
+
 public class GUIUtils {
+    public boolean purchased=false;
     public Book convertToBook(String ISBN, String Title, String PublisherID, String PublicationYear, String Category, String price){
     Book newBook=new Book();
         newBook.ISBN=ISBN;
@@ -19,7 +22,9 @@ public class GUIUtils {
         newBook.publisherID=Integer.parseInt(PublisherID);
         newBook.publicationYear=Integer.parseInt(PublicationYear);
         newBook.sellingPrice=Double.parseDouble(price);
-        newBook.category= BookCategory.valueOf(Category);
+        System.out.println(Category);
+//        sout(BookCategory.valueOf(Category.toUpperCase()));
+        newBook.category= BookCategory.valueOf(Category.toUpperCase());
         return newBook;
     }
     public String[]convertBookToStrings(Book book){

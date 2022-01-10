@@ -14,19 +14,35 @@ public class UserValidator {
         return toCheck.matches("[0-9]+");
     }
     public boolean checkNumericOrLetters(String toCheck){
-        return toCheck.matches("[a-zA-Z0-9]*");
+        return toCheck.matches("[a-zA-Z0-9\\s]*");
+    }
+    public boolean checkISBN(String toCheck){
+        return toCheck.matches("[a-zA-Z0-9\\-]*");
     }
     public boolean checkLetters(String toCheck){
         return toCheck.matches("[a-zA-Z]+");
     }
     public boolean isValidBook(String ISBN,String Title, String PublisherID,String PublicationYear,String Category,String price){
-        return checkNumericOrLetters(ISBN)&&checkNumericOrLetters(Title)&&checkNumeric(PublisherID) &&
-                validateYear(PublicationYear)&&ValidateCategory(Category)&&checkNumeric(price);
+        return checkISBN(ISBN)
+                && checkNumericOrLetters(Title)
+                && checkNumeric(PublisherID)
+                && validateYear(PublicationYear)
+                && ValidateCategory(Category)
+                && isDouble(price);
     }
     public boolean validateYear(String year){
         return year.matches("[0-9]+")&& Integer.parseInt(year)>0;
     }
     public boolean ValidateCategory(String category){
        return Stream.of("Science", "Art", "Religion", "History","Geography").anyMatch(category::equalsIgnoreCase);
+    }
+
+    public boolean isDouble(String s){
+        try {
+            Double d = Double.parseDouble(s);
+            return true;
+        }catch (NumberFormatException e){
+            return false;
+        }
     }
 }
