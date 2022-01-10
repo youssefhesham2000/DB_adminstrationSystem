@@ -6,6 +6,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Order;
+import service.ApplicationLogic;
+import service.UserManager;
 import service.UserValidator;
 
 import java.time.LocalDate;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 public class ManagerController {
     WindowChanger changer=new WindowChanger();
     GUIUtils utils=new GUIUtils();
+    UserManager userManager = ApplicationLogic.getInstance().userManager;
     @FXML
     private TextField emailToPromote;
     @FXML

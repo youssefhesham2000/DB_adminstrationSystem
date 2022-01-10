@@ -5,10 +5,16 @@ import javafx.scene.control.TextField;
 import model.Book;
 import model.BookCategory;
 import model.User;
+import service.ApplicationLogic;
+import service.BookManager;
+import service.UserManager;
 import service.UserValidator;
+
+import java.sql.SQLException;
 
 public class ModifyBookPanelController {
     private boolean stateChanged=false;
+    BookManager bookManager = ApplicationLogic.getInstance().bookManager;
     WindowChanger changer=new WindowChanger();
     private String oldBookISBN;
     private String oldTitle;
@@ -58,6 +64,11 @@ public class ModifyBookPanelController {
                Book newBook=utils.convertToBook(bookISBN.getText(),bookTitle.getText(),bookIPublisherID.getText(),bookPublicationYear.getText(),bookCategory.getText(),bookPrice.getText());
                Book oldBook=utils.convertToBook(oldBookISBN,oldTitle,oldPublisherID,oldPublicationYear,oldCategory,oldPrice);
                //update book
+                try {
+                    bookManager.updateBook(oldBook,newBook);
+                } catch (SQLException e) {
+                    changer.createMSGWindow("INvalid Attributes");
+                }
                 //implement me
             }else {
                 //show error msg
