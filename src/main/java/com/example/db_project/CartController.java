@@ -1,7 +1,10 @@
 package com.example.db_project;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
@@ -14,6 +17,8 @@ import service.CartManager;
 
 import javax.crypto.spec.GCMParameterSpec;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CartController {
     User user = ApplicationLogic.getInstance().loggedInUser;
@@ -29,6 +34,9 @@ public class CartController {
     @FXML private TableColumn<CartItemView, Double> priceColumn;
 
 
+    ObservableList<CartItemView> cartItems;
+
+
 
     @FXML
     public void initialize(){
@@ -39,12 +47,25 @@ public class CartController {
 
 
         try {
-            cartTable.setItems(FXCollections.observableList(cartManager.getUserCart(user)));
+
+            cartItems = FXCollections.observableList(cartManager.getUserCart(user));
+            cartItems.addListener(
+                    (ListChangeListener<CartItemView>) change -> {
+                        calculateTotalPrice();
+                    });
+
+            cartTable.setItems(cartItems);
+            calculateTotalPrice();
+
+
+
         } catch (SQLException throwable) {
             AlertMessage.showError("Failed to get user cart");
         }
 
         utils.removeCartItemViewToTable("remove Item",cartTable,this);
+        utils.insertIncreaseQuantityButtonToTable("Increase quantity", cartTable, this);
+
         double cartPrice=0;
         totalPrice.setText(Double.toString(cartPrice));
     }
@@ -56,18 +77,48 @@ public class CartController {
 
 
     }
+
+
+
     public void removeFromCart(CartItemView Item){
         System.out.println(Item.ISBN);
-        //remove from DB
-        cartTable.getItems().clear();
-        //get all cart objects and load it to table again
-        utils.removeCartItemViewToTable("remove Item",cartTable,this);
+        cartItems.remove(Item);
+
+        try {
+            cartManager.deleteCartItem(new CartItem(user.ID, Item.ISBN, Item.quantity));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
+
     public void increaseQuantity(CartItemView selectedItem){
         System.out.println(selectedItem.ISBN);
-        //update DB
-        cartTable.getItems().clear();
-        //get all cart objects and load it to table again
-        //utils.removeCartItemToTable("remove Item",cartTable,this);
+        int index = cartTable.getItems().indexOf(selectedItem);
+        int oldQuantity = cartTable.getItems().get(index).quantity;
+
+        selectedItem.quantity++;
+        cartItems.set(index, selectedItem);
+
+        try {
+            cartManager.updateCartItem(
+                    new CartItem(user.ID, selectedItem.ISBN, oldQuantity),
+                    new CartItem(user.ID, selectedItem.ISBN, oldQuantity+1)
+                    );
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
+
+
+    public void calculateTotalPrice(){
+        double p = cartItems.
+                stream().
+                map(c -> c.price * c.quantity).mapToDouble(Double::doubleValue).sum();
+        totalPrice.setText(String.valueOf(p));
+
+    }
+
+
 }

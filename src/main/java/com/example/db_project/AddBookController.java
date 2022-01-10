@@ -2,9 +2,16 @@ package com.example.db_project;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import model.Book;
+import service.ApplicationLogic;
+import service.BookManager;
 import service.UserValidator;
 
+import java.sql.SQLException;
+
 public class AddBookController {
+
+    BookManager bookManager = ApplicationLogic.getInstance().bookManager;
    UserValidator validator=new UserValidator();
     @FXML
     private TextField bookISBN;
@@ -29,8 +36,16 @@ public class AddBookController {
             String PublisherId=bookIPublisherID.getText();
             String PublicationYear=bookPublicationYear.getText();
             String Category=bookCategory.getText();
-            //add book to DB if book already exisit  change exisited to true
-            //implement me
+            String Price = bookPrice.getText();
+
+            GUIUtils guiUtils = new GUIUtils();
+
+            try {
+                bookManager.insertBook(guiUtils.convertToBook(ISBN, Title, PublisherId, PublicationYear, Category, Price));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
             if(!existed)
                 changer.createMSGWindow("Added Sucessfully");
             else

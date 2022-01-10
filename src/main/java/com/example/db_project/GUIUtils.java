@@ -7,8 +7,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import model.Book;
+import model.BookCategory;
 import model.CartItemView;
 import model.Order;
+
+import java.util.Locale;
 
 public class GUIUtils {
     public boolean purchased=false;
@@ -19,7 +22,9 @@ public class GUIUtils {
         newBook.publisherID=Integer.parseInt(PublisherID);
         newBook.publicationYear=Integer.parseInt(PublicationYear);
         newBook.sellingPrice=Double.parseDouble(price);
-        //newBook.category=new BookCategory(bookCategory.getText()); category is not yet determined how to handle it
+        System.out.println(Category);
+//        sout(BookCategory.valueOf(Category.toUpperCase()));
+        newBook.category= BookCategory.valueOf(Category.toUpperCase());
         return newBook;
     }
     public String[]convertBookToStrings(Book book){
@@ -68,6 +73,8 @@ public class GUIUtils {
         table.getColumns().add(colBtn);
 
     }
+
+
     public void removeCartItemViewToTable(String textToDisplay, TableView<CartItemView> table, CartController Controller) {
         TableColumn<CartItemView, String> colBtn = new TableColumn("Button Column");
         Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>> cellFactory
@@ -139,6 +146,8 @@ public class GUIUtils {
         table.getColumns().add(colBtn);
 
     }
+
+
     public void confirmOrderButtonToTable(String textToDisplay, TableView<Order> table, ManagerController Controller) {
         TableColumn<Order, String> colBtn = new TableColumn("Button Column");
         Callback<TableColumn<Order, String>, TableCell<Order, String>> cellFactory
