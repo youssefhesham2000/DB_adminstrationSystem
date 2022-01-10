@@ -10,6 +10,7 @@ public class User {
     public String email;
     public String shippingAddress;
     public String phoneNumber;
+    public UserRole role;
 
     public static User getUserFromResult(ResultSet resultSet) throws SQLException {
         User user = new User();
@@ -19,7 +20,7 @@ public class User {
         user.email = resultSet.getString("email");
         user.shippingAddress = resultSet.getString("shippingAddress");
         user.phoneNumber = resultSet.getString("phoneNumber");
-
+        user.role = UserRole.getUserRole(resultSet.getBoolean("role"));
         return user;
     }
 }

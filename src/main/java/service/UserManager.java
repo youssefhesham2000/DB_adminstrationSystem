@@ -3,11 +3,11 @@ package service;
 import model.BookCategory;
 import model.Order;
 import model.User;
+import model.UserRole;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserManager {
     private DBConnection dbConnection;
@@ -16,7 +16,7 @@ public class UserManager {
     }
 
     public boolean insertUser(User user, String password) throws SQLException {
-        String query = "INSERT INTO USER(firstName, lastName, email, shippingAddress, phoneNumber) VALUES " +
+        String query = "INSERT INTO USER(firstName, lastName, email, shippingAddress, phoneNumber, role) VALUES " +
                 "(?,?,?,?,?,?)";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, user.firstName);
@@ -25,13 +25,14 @@ public class UserManager {
         statement.setString(4, user.shippingAddress);
         statement.setString(5, user.phoneNumber);
         statement.setString(6, password);
+        statement.setBoolean(7, UserRole.getUserRoleIndex(user.role));
 
         return statement.execute();
     }
 
     public boolean updateUser(User oldUser, User newUser) throws SQLException {
         String query = "UPDATE USER " +
-                "SET firstName=?, lastName=?, email=?, shippingAddress=?, phoneNumber=? " +
+                "SET firstName=?, lastName=?, email=?, shippingAddress=?, phoneNumber=?, role=? " +
                 "WHERE ID=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, newUser.firstName);
@@ -39,7 +40,8 @@ public class UserManager {
         statement.setString(3, newUser.email);
         statement.setString(4, newUser.shippingAddress);
         statement.setString(5, newUser.phoneNumber);
-        statement.setInt(6, oldUser.ID);
+        statement.setBoolean(6, UserRole.getUserRoleIndex(newUser.role));
+        statement.setInt(7, oldUser.ID);
 
         return statement.execute();
     }
@@ -56,8 +58,12 @@ public class UserManager {
         return statement.execute();
     }
 
-    public boolean promoteToManger(User user) {
-        return false;
+    public boolean promoteToManger(User user) throws SQLException {
+        String query = "UPDATE USER SET role=1 WHERE ID=?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setInt(1, user.ID);
+
+        return statement.execute();
     }
 
     public boolean placeOrder(Order order) throws SQLException {
@@ -73,6 +79,18 @@ public class UserManager {
         return statement.execute();
     }
 
+    public List<Order> getOrders(int pageNumber) throws SQLException {
+        String query = "SELECT * FROM LIBRARY_ORDER_DETAILS LIMIT ?,10";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setInt(1, (pageNumber - 1) * 10);
+
+        ResultSet resultSet = statement.executeQuery();
+        List<Order> orderList = new ArrayList<>();
+        while (resultSet.next())
+            orderList.add(Order.getOrderFromResult(resultSet));
+        return orderList;
+    }
+
     public boolean confirmOrder(Order order) throws SQLException {
         String query = "DELETE FROM LIBRARY_ORDER_DETAILS WHERE ID=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
@@ -80,5 +98,16 @@ public class UserManager {
 
         return statement.execute();
 
+    }
+
+    public User login(String email, String password) throws SQLException {
+        String query = "SELECT FROM USER WHERE email=?,password=?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        User user = null;
+        if(resultSet.next())
+            user = User.getUserFromResult(resultSet);
+        return user;
     }
 }
