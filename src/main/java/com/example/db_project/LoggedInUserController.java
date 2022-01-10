@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Book;
 import model.BookCategory;
 import model.CartItem;
+import model.User;
 import service.ApplicationLogic;
 import service.BookManager;
 import service.CartManager;
@@ -21,6 +22,7 @@ public class LoggedInUserController {
     ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
     BookManager bookManager = applicationLogic.bookManager;
     CartManager cartManager = applicationLogic.cartManager;
+    User user = applicationLogic.loggedInUser;
 
 
     private String searchBy="";
@@ -38,7 +40,6 @@ public class LoggedInUserController {
     @FXML private TableColumn<Book, String> bookAuthors;
     @FXML private TableColumn<Book, BookCategory> bookCategory;
     @FXML private TableColumn<Book, Double> bookPrice;
-    @FXML private TableColumn<Book, Void> addToCartButtons;
 
     int pageNumber = 1;
     @FXML Label pageNumberLabel;
@@ -133,7 +134,7 @@ public class LoggedInUserController {
 
     public  void AddToCart(Book selectedBook){
         try {
-            cartManager.insertCartItem(new CartItem(1, selectedBook.ISBN, 1));
+            cartManager.insertCartItem(new CartItem(user.ID , selectedBook.ISBN, 1));
             AlertMessage.showConfirmation("\"" + selectedBook.title + "\" added successfully to cart");
 
         } catch (SQLException throwables) {

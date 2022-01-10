@@ -44,6 +44,8 @@ public class CartController {
         titleColumn.setCellValueFactory(new PropertyValueFactory<CartItemView, String>("title"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<CartItemView, Integer>("quantity"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<CartItemView, Double>("price"));
+        utils.removeCartItemViewToTable("remove Item",cartTable,this);
+        utils.insertIncreaseQuantityButtonToTable("Increase quantity", cartTable, this);
 
 
         try {
@@ -57,25 +59,18 @@ public class CartController {
             cartTable.setItems(cartItems);
             calculateTotalPrice();
 
-
-
         } catch (SQLException throwable) {
             AlertMessage.showError("Failed to get user cart");
         }
 
-        utils.removeCartItemViewToTable("remove Item",cartTable,this);
-        utils.insertIncreaseQuantityButtonToTable("Increase quantity", cartTable, this);
 
-        double cartPrice=0;
-        totalPrice.setText(Double.toString(cartPrice));
     }
+
     public void purchase(ActionEvent event){
         WindowChanger changer=new WindowChanger();
         CreditCardController controller=new CreditCardController();
         ((Node)(event.getSource())).getScene().getWindow().hide();
         changer.changeWindow("CreditCardPanel.fxml",controller);
-
-
     }
 
 

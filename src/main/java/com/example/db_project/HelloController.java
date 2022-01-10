@@ -72,7 +72,6 @@ public class HelloController {
         try {
             user = userManager.login(email, password, role);
             if (user != null) {
-                ApplicationLogic.getInstance().loggedInUser = user;
                 ((Node) (event.getSource())).getScene().getWindow().hide();
                 changer.changeWindow("LoggedInUser.fxml", null);
             }

@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import service.ApplicationLogic;
 import service.DBConnection;
+import service.UserManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,13 +19,14 @@ public class HelloApplication extends Application {
             DBConnection dbConnection = new DBConnection(url);
             ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
             applicationLogic.initializeApplication(dbConnection);
+            applicationLogic.userManager.login("adel@shakal.com", "Password@1", 1);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoggedInUser.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Library Administration System");
         stage.setScene(scene);

@@ -129,6 +129,7 @@ public class UserManager {
         if(resultSet.next())
             user = User.getUserFromResult(resultSet, true);
 
+        ApplicationLogic.getInstance().loggedInUser = user;
         return user;
     }
 
