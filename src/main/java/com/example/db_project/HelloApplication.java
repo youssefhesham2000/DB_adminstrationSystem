@@ -18,6 +18,8 @@ public class HelloApplication extends Application {
             DBConnection dbConnection = new DBConnection(url);
             ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
             applicationLogic.initializeApplication(dbConnection);
+
+            applicationLogic.userManager.login("adel@shakal.com", "Password@1");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

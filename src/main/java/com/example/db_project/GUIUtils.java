@@ -7,10 +7,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import model.Book;
-import model.CartItem;
+import model.CartItemView;
 import model.Order;
 
 public class GUIUtils {
+    public boolean purchased=false;
     public Book convertToBook(String ISBN, String Title, String PublisherID, String PublicationYear, String Category, String price){
     Book newBook=new Book();
         newBook.ISBN=ISBN;
@@ -31,6 +32,7 @@ public class GUIUtils {
         //newBook.category=new BookCategory(bookCategory.getText()); category is not yet determined how to handle it
         return newBook;
     }
+
     public void addTOCartButtonToTable( String textToDisplay, TableView<Book> table,LoggedInUserController Controller) {
         TableColumn<Book, String> colBtn = new TableColumn("Button Column");
         Callback<TableColumn<Book, String>, TableCell<Book, String>> cellFactory
@@ -66,14 +68,14 @@ public class GUIUtils {
         table.getColumns().add(colBtn);
 
     }
-    public void removeCartItemToTable(String textToDisplay, TableView<CartItem> table, CartController Controller) {
-        TableColumn<CartItem, String> colBtn = new TableColumn("Button Column");
-        Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>> cellFactory
+    public void removeCartItemViewToTable(String textToDisplay, TableView<CartItemView> table, CartController Controller) {
+        TableColumn<CartItemView, String> colBtn = new TableColumn("Button Column");
+        Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>> cellFactory
                 = //
-                new Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>>() {
+                new Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<CartItem, String> param) {
-                        final TableCell<CartItem, String> cell = new TableCell<CartItem, String>() {
+                    public TableCell call(final TableColumn<CartItemView, String> param) {
+                        final TableCell<CartItemView, String> cell = new TableCell<CartItemView, String>() {
 
                             final Button btn = new Button(textToDisplay);
 
@@ -85,8 +87,44 @@ public class GUIUtils {
                                     setText(null);
                                 } else {
                                     btn.setOnAction(event -> {
-                                        CartItem Item = getTableView().getItems().get(getIndex());
+                                        CartItemView Item = getTableView().getItems().get(getIndex());
                                         Controller.removeFromCart(Item);
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        colBtn.setCellFactory(cellFactory);
+        table.getColumns().add(colBtn);
+
+    }
+
+    public void insertIncreaseQuantityButtonToTable(String textToDisplay, TableView<CartItemView> table, CartController Controller) {
+        TableColumn<CartItemView, String> colBtn = new TableColumn("increase Button Column");
+        Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>> cellFactory
+                = //
+                new Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<CartItemView, String> param) {
+                        final TableCell<CartItemView, String> cell = new TableCell<CartItemView, String>() {
+
+                            final Button btn = new Button(textToDisplay);
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        CartItemView Item = getTableView().getItems().get(getIndex());
+                                        Controller.increaseQuantity(Item);
                                     });
                                     setGraphic(btn);
                                     setText(null);

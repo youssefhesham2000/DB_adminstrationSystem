@@ -8,6 +8,15 @@ public class CartItem {
     public String ISBN;
     public int quantity;
 
+    public CartItem() {
+    }
+
+    public CartItem(int userID, String ISBN, int quantity) {
+        this.userID = userID;
+        this.ISBN = ISBN;
+        this.quantity = quantity;
+    }
+
     public static CartItem getCartItemFromResult(ResultSet resultSet) throws SQLException {
         CartItem cartItem = new CartItem();
         cartItem.userID = resultSet.getInt("userID");

@@ -102,13 +102,17 @@ public class UserManager {
     }
 
     public User login(String email, String password) throws SQLException {
-        String query = "SELECT FROM USER WHERE email=?,password=?";
+        String query = "SELECT * FROM USER WHERE email=? AND password=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, email);
+        statement.setString(2, password);
         ResultSet resultSet = statement.executeQuery();
 
         User user = null;
         if(resultSet.next())
             user = User.getUserFromResult(resultSet);
+
+        ApplicationLogic.getInstance().loggedInUser = user;
         return user;
     }
 }

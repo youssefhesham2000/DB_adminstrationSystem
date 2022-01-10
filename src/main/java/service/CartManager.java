@@ -2,6 +2,7 @@ package service;
 
 import model.Book;
 import model.CartItem;
+import model.CartItemView;
 import model.User;
 
 import java.sql.PreparedStatement;
@@ -57,19 +58,22 @@ public class CartManager {
         statement.setInt(1, user.ID);
 
         return statement.execute();
-
     }
 
 
-    List<CartItem> getUserCart(User user) throws SQLException {
-        String query = "SELECT * FROM CART WHERE userID=?";
+    public List<CartItemView> getUserCart(User user) throws SQLException {
+        String query =
+                "SELECT c.ISBN, b.title, c.quantity, c.quantity*b.sellingPrice as price " +
+                "FROM CART c " +
+                "JOIN BOOK b ON c.ISBN = b.ISBN " +
+                "WHERE userID=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setInt(1, user.ID);
         ResultSet resultSet = statement.executeQuery();
 
-        List<CartItem> cartItems = new ArrayList<>();
+        List<CartItemView> cartItems = new ArrayList<>();
         while (resultSet.next())
-            cartItems.add(CartItem.getCartItemFromResult(resultSet));
+            cartItems.add(CartItemView.getCartItemFromResult(resultSet));
         return cartItems;
 
     }
