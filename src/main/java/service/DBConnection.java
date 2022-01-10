@@ -14,4 +14,7 @@ public class DBConnection {
         return connection.prepareStatement(SQLQuery);
     }
 
+    public CallableStatement getCallableStatement(String SQLQuery) throws SQLException {
+        return connection.prepareCall(SQLQuery);
+    }
 }
