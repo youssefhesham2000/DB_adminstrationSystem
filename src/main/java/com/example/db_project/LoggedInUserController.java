@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Book;
 import model.BookCategory;
 import service.ApplicationLogic;
+import service.BookManager;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class LoggedInUserController {
 
     ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
+    BookManager bookManager = applicationLogic.bookManager;
 
 
     private String searchBy="";
@@ -35,6 +37,11 @@ public class LoggedInUserController {
     @FXML private TableColumn<Book, Double> bookPrice;
     @FXML private TableColumn<Book, Void> addToCartButtons;
 
+    int pageNumber = 1;
+    @FXML Label pageNumberLabel;
+    @FXML Button nextPageButton;
+    @FXML Button prevPageButton;
+
     @FXML
     public void initialize(){
         GUIUtils utils=new GUIUtils();
@@ -52,31 +59,53 @@ public class LoggedInUserController {
         else
             utils.addModifyBookButtonToTable("ModifyBook",bookTable,new LoggedInUserController());
 
-
-        try {
-            List<Book> books = applicationLogic.bookManager.getAllBooks(0);
-            System.out.println(books.size());
-            bookTable.setItems(FXCollections.observableList(books));
-
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        loadAllBooks();
     }
     @FXML
     public void changeSearchBy(ActionEvent event){
+        setPageNumber(1);
         MenuItem source = (MenuItem) event.getSource();
         searchBy=source.getText();
         searchByMenu.setText(searchBy);
     }
-    public void  Search(){
-        String searchAtt=searchAttribute.getText();
-        if(searchAtt!=""&&searchBy!=""){
-            //implement me
-            //call search function
+
+    public void search() {
+        String searchAtt = searchAttribute.getText();
+
+        try {
+            if (searchBy.equals("")){
+                loadBooksTable(bookManager.getAllBooks(pageNumber));
+                return;
+            }
+
+            List<Book> books;
+
+
+            switch (searchBy) {
+                case "Title":
+                    books = bookManager.searchBooksByTitle(searchAtt, pageNumber);
+                    break;
+                case "ISBN":
+                    books = bookManager.searchBooksByISBN(searchAtt, pageNumber);
+                    break;
+                case "Author":
+                    books = bookManager.searchBooksByAuthor(searchAtt, pageNumber);
+                    break;
+                case "Publication year":
+                    books = bookManager.searchBooksByPublicationYear(searchAtt, pageNumber);
+                    break;
+                default:
+                    books = bookManager.getAllBooks(pageNumber);
+            }
+
+            loadBooksTable(books);
+
+
+        }catch(SQLException throwables){
+            throwables.printStackTrace();
         }
     }
+
     public void cartButtonIsClicked(){
 
         CartController controller=new CartController();
@@ -109,4 +138,46 @@ public class LoggedInUserController {
         changer.changeWindow("ModifyBookPanel.fxml",new ModifyBookPanelController(results[0],results[1],results[2],results[3],results[4],results[5]));
 
     }
+
+
+    @FXML public void searchClicked(ActionEvent event){
+        setPageNumber(1);
+        search();
+    }
+
+    @FXML public void nextPageClicked(ActionEvent event){
+        setPageNumber(pageNumber+1);
+        search();
+    }
+
+    @FXML public void prevPageClicked(ActionEvent event){
+        if (pageNumber <= 1)  return;
+
+        setPageNumber(pageNumber-1);
+        search();
+    }
+
+
+    void loadAllBooks(){
+        try {
+            loadBooksTable(bookManager.getAllBooks(pageNumber));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the table view with the given books
+     * @param books
+     */
+    void loadBooksTable(List<Book> books){
+        bookTable.setItems(FXCollections.observableList(books));
+    }
+
+    void setPageNumber(int pageNumber){
+        this.pageNumber = pageNumber;
+        pageNumberLabel.setText(String.valueOf(pageNumber));
+    }
+
+
 }
