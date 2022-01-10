@@ -11,6 +11,7 @@ import model.CartItem;
 import model.Order;
 
 public class GUIUtils {
+    public boolean purchased=false;
     public Book convertToBook(String ISBN, String Title, String PublisherID, String PublicationYear, String Category, String price){
     Book newBook=new Book();
         newBook.ISBN=ISBN;

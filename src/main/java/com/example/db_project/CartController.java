@@ -1,6 +1,8 @@
 package com.example.db_project;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import model.CartItem;
@@ -23,12 +25,13 @@ public class CartController {
         double cartPrice=0;
         totalPrice.setText(Double.toString(cartPrice));
     }
-    public void purchase(){
+    public void purchase(ActionEvent event){
         WindowChanger changer=new WindowChanger();
         CreditCardController controller=new CreditCardController();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
         changer.changeWindow("CreditCardPanel.fxml",controller);
-        //implement me
-        //get items and perform update on DB then get the new cart
+
+
     }
     public void removeFromCart(CartItem Item){
         System.out.println(Item.ISBN);
