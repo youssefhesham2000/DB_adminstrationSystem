@@ -21,4 +21,52 @@ public class Book {
         book.category = BookCategory.getBookCategory(resultSet.getInt("category"));
         return book;
     }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getPublisherID() {
+        return publisherID;
+    }
+
+    public void setPublisherID(int publisherID) {
+        this.publisherID = publisherID;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    public double getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(double sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
+    public BookCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(BookCategory category) {
+        this.category = category;
+    }
 }

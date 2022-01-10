@@ -4,8 +4,10 @@ import java.sql.*;
 
 public class DBConnection {
     Connection connection;
-    DBConnection() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SAMPLE18010078_18015026");
+    public DBConnection() throws SQLException {
+        connection = DriverManager.getConnection("jdbc:mysql://156.194.126.31:3306/ORDER_PROCESSING_SYSTEM",
+                "SAMPLE",
+                "Root_Password123!");
     }
 
     public PreparedStatement getPreparedStatement(String SQLQuery) throws SQLException {

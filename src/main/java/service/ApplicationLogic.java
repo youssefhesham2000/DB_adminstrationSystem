@@ -7,11 +7,11 @@ import java.sql.SQLException;
 public class ApplicationLogic {
 
     private static ApplicationLogic applicationLogic;
-    private User loggedInUser;
+    public User loggedInUser;
     private DBConnection dbConnection;
-    private UserManager userManager;
-    private BookManager bookManager;
-    private CartManager cartManager;
+    public UserManager userManager;
+    public BookManager bookManager;
+    public CartManager cartManager;
     private ApplicationLogic() {}
 
     public void initializeApplication(DBConnection dbConnection) {
@@ -29,7 +29,7 @@ public class ApplicationLogic {
     }
 
     public boolean login(String email, String password) {
-    return false;
+        return false;
     }
 
     public boolean logout() {

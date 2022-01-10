@@ -5,5 +5,6 @@ module com.example.db_project {
 
 
     opens com.example.db_project to javafx.fxml;
+    opens model to javafx.base;
     exports com.example.db_project;
 }
