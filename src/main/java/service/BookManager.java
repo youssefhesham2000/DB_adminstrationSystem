@@ -68,4 +68,43 @@ public class BookManager {
             bookList.add(Book.getBookFromResult(resultSet));
         return bookList;
     }
+
+    public List<Book> searchBooksByAuthor(String authorName) throws SQLException {
+        String query = "SELECT B.* FROM BOOK B " +
+                "INNER JOIN BOOK_AUTHORS A ON B.ISBN=A.ISBN " +
+                "WHERE A.name=(SELECT ID FROM AUTHORS WHERE name LIKE ?)";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, authorName + "%");
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Book> bookList = new ArrayList<>();
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
+    }
+
+    public List<Book> searchBooksByISBN(String ISBN) throws SQLException {
+        String query = "SELECT * FROM BOOK WHERE ISBN LIKE ?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, ISBN + "%");
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Book> bookList = new ArrayList<>();
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
+    }
+
+    public List<Book> searchBooksByTitle(String title) throws SQLException {
+        String query = "SELECT * FROM BOOK WHERE title LIKE ?";
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, title + "%");
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Book> bookList = new ArrayList<>();
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
+    }
+
 }
