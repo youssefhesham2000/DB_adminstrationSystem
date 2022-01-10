@@ -1,0 +1,16 @@
+USE ORDER_PROCESSING_SYSTEM;
+
+DROP VIEW IF EXISTS topFiveCustomers;
+CREATE VIEW topFiveCustomers AS 
+SELECT U.*, SUM(S.totalPrice) AS total
+    FROM BOOK_SALES S INNER JOIN USER U ON U.ID=S.userID
+    GROUP BY userID
+    ORDER BY total DESC
+    LIMIT 5;
+    
+DROP VIEW IF EXISTS topTenBooks;
+CREATE VIEW topTenBooks AS 
+SELECT B.*, SUM(S.quantity) AS total
+    FROM BOOK_SALES S INNER JOIN BOOK B ON S.ISBN=B.ISBN
+    GROUP BY ISBN
+    ORDER BY total DESC
