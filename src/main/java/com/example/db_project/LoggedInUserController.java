@@ -107,11 +107,12 @@ public class LoggedInUserController {
         CartController controller=new CartController();
         changer.changeWindow("Cart.fxml",controller);
     }
+
     public void profileButtonIsClicked(){
         WindowChanger changer =new WindowChanger();
-        UserProfilePreviewController controller=new UserProfilePreviewController();
-        changer.changeWindow("UserProfilePreview.fxml",controller);
+        changer.changeWindow("UserProfilePreview.fxml",null);
     }
+
     public void logOutIsClicked(ActionEvent event){
         //log out of system
         //implement me
@@ -120,9 +121,10 @@ public class LoggedInUserController {
         changer.changeWindow("hello-view.fxml",null);
 
     }
-    public void  getIntoManagerOptions(){
-    WindowChanger changer=new WindowChanger();
-    changer.changeWindow("LoggedInManager.fxml",new ManagerController());
+
+    @FXML public void  getIntoManagerOptions(){
+        WindowChanger changer=new WindowChanger();
+        changer.changeWindow("LoggedInManager.fxml",new ManagerController());
     }
 
 

@@ -39,7 +39,7 @@ public class UserManager {
         statement.setString(3, newUser.email);
         statement.setString(4, newUser.shippingAddress);
         statement.setString(5, newUser.phoneNumber);
-        statement.setInt(6, oldUser.ID);
+        statement.setInt(6, 1);
 
         return statement.execute();
     }

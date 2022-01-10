@@ -29,9 +29,9 @@ public class ManagerController {
 
         changer.createMSGWindow(msg);
     }
+
     public void addBookIsClicked(){
         changer.changeWindow("AddBookPanel.fxml",new AddBookController());
-
     }
     public void placeOrderIsClicked(){
         UserValidator validator=new UserValidator();

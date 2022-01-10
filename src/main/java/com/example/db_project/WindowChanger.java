@@ -7,7 +7,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class WindowChanger {
-    public void changeWindow(String FXMLFile,Object controller){//controller can be null if we are changing to log in page
+    /**
+     *
+     * @param FXMLFile
+     * @param controller can be null if the fxml references a controller
+     */
+    public void changeWindow(String FXMLFile,Object controller){
         try {
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(FXMLFile));
@@ -32,4 +37,5 @@ public class WindowChanger {
             e.printStackTrace();
         }
     }
+
 }
