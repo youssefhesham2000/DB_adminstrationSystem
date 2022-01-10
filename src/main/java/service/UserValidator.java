@@ -19,9 +19,9 @@ public class UserValidator {
     public boolean checkLetters(String toCheck){
         return toCheck.matches("[a-zA-Z]+");
     }
-    public boolean isValidBook(String ISBN,String Title, String PublisherID,String PublicationYear,String Category){
+    public boolean isValidBook(String ISBN,String Title, String PublisherID,String PublicationYear,String Category,String price){
         return checkNumericOrLetters(ISBN)&&checkNumericOrLetters(Title)&&checkNumeric(PublisherID) &&
-                validateYear(PublicationYear)&&ValidateCategory(Category);
+                validateYear(PublicationYear)&&ValidateCategory(Category)&&checkNumeric(price);
     }
     public boolean validateYear(String year){
         return year.matches("[0-9]+")&& Integer.parseInt(year)>0;

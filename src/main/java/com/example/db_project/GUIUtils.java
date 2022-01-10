@@ -1,7 +1,18 @@
 package com.example.db_project;
 
-public class GUIUtils {
+import model.Book;
 
+public class GUIUtils {
+    public Book convertToBook(String ISBN, String Title, String PublisherID, String PublicationYear, String Category, String price){
+    Book newBook=new Book();
+        newBook.ISBN=ISBN;
+        newBook.title=Title;
+        newBook.publisherID=Integer.parseInt(PublisherID);
+        newBook.publicationYear=Integer.parseInt(PublicationYear);
+        newBook.sellingPrice=Double.parseDouble(price);
+        //newBook.category=new BookCategory(bookCategory.getText()); category is not yet determined how to handle it
+        return newBook;
+    }
     // Return true if the card number is valid
     public  boolean isValid(long number)
     {

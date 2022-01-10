@@ -45,6 +45,8 @@ public class ManagerController {
             //if ISBN not found set bool found to false
             if(!found)
                 changer.createMSGWindow("book not found");
+            else
+                changer.createMSGWindow("Order is Placed");
         }
         else{
             changer.createMSGWindow("wrong attributes");
@@ -52,5 +54,8 @@ public class ManagerController {
     }
     public void enterModifyList(){
         changer.changeWindow("ManagerBookList.fxml",new ManagerBookLIstController());
+    }
+    public void viewReportsIsClicked(){
+        //handle jasper  report generator code here
     }
 }

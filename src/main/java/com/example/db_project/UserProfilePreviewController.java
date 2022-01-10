@@ -20,7 +20,7 @@ public class UserProfilePreviewController {
     private TextField shippingAddress;
     @FXML
     public void initialize(){
-        User logged=new User();
+        User logged=new User();//acess user data using singelton
         logged.firstName="test";
         logged.lastName="tesfas";
         logged.shippingAddress="safsgh";

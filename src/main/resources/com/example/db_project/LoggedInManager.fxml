@@ -54,7 +54,7 @@
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="viewReports" mnemonicParsing="false" text="view reports">
+            <Button fx:id="viewReports" mnemonicParsing="false" onAction="#viewReportsIsClicked" text="view reports">
                <HBox.margin>
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>
