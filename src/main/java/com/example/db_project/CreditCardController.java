@@ -27,10 +27,11 @@ public class CreditCardController {
         if(utils.isValid(number)){
             //implement me
             //perform update on DB then clear user cart
+            boolean sucess=false;
             try {
                 userManager.buyCart(logged);
             } catch (SQLException e) {
-                e.printStackTrace();
+                changer.createMSGWindow("purchase failed try again");
             }
 
             changer.changeWindow("Cart.fxml",null);
