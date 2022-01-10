@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Book;
 import model.BookCategory;
+import model.CartItem;
 import service.ApplicationLogic;
 import service.BookManager;
+import service.CartManager;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,6 +20,7 @@ public class LoggedInUserController {
 
     ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
     BookManager bookManager = applicationLogic.bookManager;
+    CartManager cartManager = applicationLogic.cartManager;
 
 
     private String searchBy="";
@@ -107,9 +110,7 @@ public class LoggedInUserController {
     }
 
     public void cartButtonIsClicked(){
-
-        CartController controller=new CartController();
-        changer.changeWindow("Cart.fxml",controller);
+        changer.changeWindow("Cart.fxml",null);
     }
 
     public void profileButtonIsClicked(){
@@ -129,11 +130,17 @@ public class LoggedInUserController {
         WindowChanger changer=new WindowChanger();
         changer.changeWindow("LoggedInManager.fxml",null);
     }
+
     public  void AddToCart(Book selectedBook){
-        //implement me
-        //add to my cart
-        System.out.println(selectedBook.ISBN);
+        try {
+            cartManager.insertCartItem(new CartItem(1, selectedBook.ISBN, 1));
+            AlertMessage.showConfirmation("\"" + selectedBook.title + "\" added successfully to cart");
+
+        } catch (SQLException throwables) {
+            AlertMessage.showError("Item already exists in cart");
+        }
     }
+
     public void ModifyBook(Book selectedBook){
         System.out.println(selectedBook.ISBN);
         GUIUtils utils =new GUIUtils();
