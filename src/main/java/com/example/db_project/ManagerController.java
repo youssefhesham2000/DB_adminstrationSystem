@@ -75,6 +75,7 @@ public class ManagerController {
     public void confirmOrder(Order confirmedOrder){
         System.out.println(confirmedOrder.ID);
         //confirm order to DB
+
         orderTable.getItems().clear();
         //and re load orders data
 
