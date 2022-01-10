@@ -20,4 +20,16 @@ public class WindowChanger {
             e.printStackTrace();
         }
     }
+    public void createMSGWindow(String MSG){//controller can be null if we are changing to log in page
+        try {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MSG.fxml"));
+            fxmlLoader.setController(new MSGController(MSG));
+            Scene scene = new Scene(fxmlLoader.load(), 300, 200);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

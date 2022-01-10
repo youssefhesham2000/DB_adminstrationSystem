@@ -3,10 +3,7 @@ package com.example.db_project;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Book;
 
 public class LoggedInUserController {
@@ -17,8 +14,16 @@ public class LoggedInUserController {
     private TableView<Book> bookTable;
     @FXML
     private TextField searchAttribute;
+    @FXML
+    private Button managementButton;
+    @FXML
+    public void initialize(){
+    //get user type and put in manager boolean var
+        boolean manager=true;
+        if(!manager)
+            managementButton.setVisible(false);
 
-
+    }
     @FXML
     public void changeSearchBy(ActionEvent event){
         MenuItem source = (MenuItem) event.getSource();
@@ -47,5 +52,9 @@ public class LoggedInUserController {
         WindowChanger changer=new WindowChanger();
         changer.changeWindow("hello-view.fxml",null);
 
+    }
+    public void  getIntoManagerOptions(){
+    WindowChanger changer=new WindowChanger();
+    changer.changeWindow("LoggedInManager.fxml",new ManagerController());
     }
 }

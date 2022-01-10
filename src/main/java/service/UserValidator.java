@@ -5,4 +5,10 @@ public class UserValidator {
         return  number.matches("[0-9]+") && FName.matches("[a-zA-Z]+")&& email.matches("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$")&&
                 LName.matches("[a-zA-Z]+")&& Address.matches("[a-zA-Z0-9]*")&&password.length()>8;
     }
+    public boolean checkNumeric(String toCheck){
+        return toCheck.matches("[0-9]+");
+    }
+    public boolean checkNumericOrLetters(String toCheck){
+        return toCheck.matches("[a-zA-Z0-9]*");
+    }
 }
