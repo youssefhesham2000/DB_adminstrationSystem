@@ -111,8 +111,16 @@ public class UserManager {
 
         User user = null;
         if(resultSet.next())
-            user = User.getUserFromResult(resultSet);
+            user = User.getUserFromResult(resultSet, true);
 
         return user;
+    }
+
+    public boolean buyCart(User user) throws SQLException {
+        String callableQuery = "{ CALL purchaseCart(?) }";
+        CallableStatement statement = dbConnection.getCallableStatement(callableQuery);
+        statement.setInt(1, user.ID);
+
+        return statement.execute();
     }
 }
