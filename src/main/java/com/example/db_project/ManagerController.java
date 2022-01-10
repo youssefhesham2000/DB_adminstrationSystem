@@ -9,11 +9,9 @@ import model.Book;
 import model.BookCategory;
 import model.Order;
 import model.User;
-import service.ApplicationLogic;
-import service.BookManager;
-import service.UserManager;
-import service.UserValidator;
+import service.*;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,6 +20,7 @@ public class ManagerController {
     WindowChanger changer=new WindowChanger();
     UserManager userManager = ApplicationLogic.getInstance().userManager;
     BookManager bookManager = ApplicationLogic.getInstance().bookManager;
+
     GUIUtils utils=new GUIUtils();
 
 
@@ -133,5 +132,32 @@ public class ManagerController {
             throwables.printStackTrace();
         }
 
+    }
+    public  void generateTopTen(){
+        try {
+            ReportManager.exportTopTenBooksReport( bookManager);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public  void generateTopFive(){
+        try {
+            ReportManager.exportTopFiveCustomers( userManager);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public  void generateTotalSales(){
+        try {
+            ReportManager.exportTotalSales( bookManager);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

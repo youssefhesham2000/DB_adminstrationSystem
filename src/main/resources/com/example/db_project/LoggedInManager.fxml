@@ -11,9 +11,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.db_project.ManagerController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="704.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.db_project.ManagerController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="555.2000244140625" minWidth="10.0" percentWidth="100.0" prefWidth="555.2000244140625" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="555.2000244140625" minWidth="10.0" percentWidth="173.0" prefWidth="555.2000244140625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="555.2000244140625" minWidth="10.0" percentWidth="27.0" prefWidth="555.2000244140625" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="127.00000610351563" minHeight="10.0" prefHeight="51.399993896484375" vgrow="SOMETIMES" />
@@ -23,11 +24,11 @@
    <children>
       <TableView fx:id="orderTable" prefHeight="251.0" prefWidth="479.0" GridPane.rowIndex="1">
         <columns>
-          <TableColumn fx:id="orderIdColumn" prefWidth="75.0" text="Order ID" />
-          <TableColumn fx:id="ISBNColumn" prefWidth="75.0" text="ISBN" />
-            <TableColumn fx:id="quantityColumn" prefWidth="75.0" text="Quantity" />
-            <TableColumn fx:id="requestTimeColumn" prefWidth="108.0" text="Request date" />
-            <TableColumn fx:id="deliveryTimeColumn" prefWidth="97.5999755859375" text="Delivery Date" />
+          <TableColumn fx:id="orderID" prefWidth="75.0" text="Order ID" />
+          <TableColumn fx:id="bookISBN" prefWidth="75.0" text="Book ISBN" />
+            <TableColumn fx:id="quantity" prefWidth="75.0" text="Quantity" />
+            <TableColumn fx:id="requestTime" prefWidth="108.0" text="Request date" />
+            <TableColumn fx:id="deliveryTime" prefWidth="97.5999755859375" text="Delivery Date" />
             <TableColumn fx:id="confirmButton" prefWidth="75.0" />
         </columns>
       </TableView>
@@ -48,7 +49,12 @@
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="viewReports" mnemonicParsing="false" onAction="#viewReportsIsClicked" text="view reports">
+            <Button fx:id="viewReports" mnemonicParsing="false" onAction="#generateTopTen" text="top 10 Books">
+               <HBox.margin>
+                  <Insets left="10.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#generateTopFive" text="Top 5 Customers">
                <HBox.margin>
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>
@@ -82,6 +88,11 @@
             </Button>
          </children>
       </HBox>
+      <Button mnemonicParsing="false" onAction="#generateTotalSales" text="Total sales" GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
    </children>
    <padding>
       <Insets left="20.0" right="20.0" />
