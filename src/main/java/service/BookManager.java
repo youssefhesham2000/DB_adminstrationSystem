@@ -45,22 +45,10 @@ public class BookManager {
         return statement.execute();
     }
 
-    public List<Book> searchByTitle(String title) throws SQLException {
-        String query = "SELECT * FROM BOOK WHERE title LIKE ?";
-        PreparedStatement statement = dbConnection.getPreparedStatement(query);
-        statement.setString(1, "%" + title + "%");
-        ResultSet resultSet = statement.executeQuery();
-
-        List<Book> bookList = new ArrayList<>();
-        while (resultSet.next())
-            bookList.add(Book.getBookFromResult(resultSet));
-        return bookList;
-    }
-
-    public List<Book> getAllBooks(int startingIndex) throws SQLException {
+    public List<Book> getAllBooks(int pageNumber) throws SQLException {
         String query = "SELECT * FROM BOOK LIMIT ?,10";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
-        statement.setInt(1, startingIndex);
+        statement.setInt(1, (pageNumber-1)*10);
         ResultSet resultSet = statement.executeQuery();
         List<Book> bookList = new ArrayList<>();
 
@@ -69,12 +57,14 @@ public class BookManager {
         return bookList;
     }
 
-    public List<Book> searchBooksByAuthor(String authorName) throws SQLException {
+    public List<Book> searchBooksByAuthor(String authorName, int pageNumber) throws SQLException {
         String query = "SELECT B.* FROM BOOK B " +
                 "INNER JOIN BOOK_AUTHORS A ON B.ISBN=A.ISBN " +
-                "WHERE A.name=(SELECT ID FROM AUTHORS WHERE name LIKE ?)";
+                "WHERE A.name=(SELECT ID FROM AUTHORS WHERE name LIKE ?)" +
+                "LIMIT ?,10";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, authorName + "%");
+        statement.setInt(2, (pageNumber-1)*10);
         ResultSet resultSet = statement.executeQuery();
 
         List<Book> bookList = new ArrayList<>();
@@ -83,10 +73,11 @@ public class BookManager {
         return bookList;
     }
 
-    public List<Book> searchBooksByISBN(String ISBN) throws SQLException {
-        String query = "SELECT * FROM BOOK WHERE ISBN LIKE ?";
+    public List<Book> searchBooksByISBN(String ISBN, int pageNumber) throws SQLException {
+        String query = "SELECT * FROM BOOK WHERE ISBN LIKE ? LIMIT ?,10";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, ISBN + "%");
+        statement.setInt(2, (pageNumber-1)*10);
         ResultSet resultSet = statement.executeQuery();
 
         List<Book> bookList = new ArrayList<>();
@@ -95,10 +86,12 @@ public class BookManager {
         return bookList;
     }
 
-    public List<Book> searchBooksByTitle(String title) throws SQLException {
-        String query = "SELECT * FROM BOOK WHERE title LIKE ?";
+    public List<Book> searchBooksByTitle(String title, int pageNumber) throws SQLException {
+        String query = "SELECT * FROM BOOK WHERE title LIKE ? LIMIT ?,10";
+
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setString(1, title + "%");
+        statement.setInt(2, (pageNumber-1)*10);
         ResultSet resultSet = statement.executeQuery();
 
         List<Book> bookList = new ArrayList<>();
@@ -106,5 +99,21 @@ public class BookManager {
             bookList.add(Book.getBookFromResult(resultSet));
         return bookList;
     }
+
+    public List<Book> searchBooksByPublicationYear(String year, int pageNumber) throws SQLException {
+        String query = "SELECT * FROM BOOK WHERE publicationYear = ? LIMIT ?,10";
+
+        PreparedStatement statement = dbConnection.getPreparedStatement(query);
+        statement.setString(1, year);
+        statement.setInt(2, (pageNumber-1)*10);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Book> bookList = new ArrayList<>();
+        while (resultSet.next())
+            bookList.add(Book.getBookFromResult(resultSet));
+        return bookList;
+    }
+
+
 
 }
