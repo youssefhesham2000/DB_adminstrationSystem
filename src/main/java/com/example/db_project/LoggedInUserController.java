@@ -18,7 +18,9 @@ public class LoggedInUserController {
     private Button managementButton;
     @FXML
     public void initialize(){
+        //implement me
     //get user type and put in manager boolean var
+        //get all books
         boolean manager=true;
         if(!manager)
             managementButton.setVisible(false);
@@ -33,6 +35,7 @@ public class LoggedInUserController {
     public void  Search(){
         String searchAtt=searchAttribute.getText();
         if(searchAtt!=""&&searchBy!=""){
+            //implement me
             //call search function
         }
     }
@@ -48,6 +51,7 @@ public class LoggedInUserController {
     }
     public void logOutIsClicked(ActionEvent event){
         //log out of system
+        //implement me
         ((Node)(event.getSource())).getScene().getWindow().hide();
         WindowChanger changer=new WindowChanger();
         changer.changeWindow("hello-view.fxml",null);

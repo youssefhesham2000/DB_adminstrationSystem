@@ -17,6 +17,10 @@ public class ManagerBookLIstController {
     @FXML
     private TextField searchAttribute;
     @FXML
+    public void initializer(){
+        //implement me
+        //get all books
+    }
     public void changeSearchBy(ActionEvent event){
         MenuItem source = (MenuItem) event.getSource();
         searchBy=source.getText();
@@ -26,6 +30,7 @@ public class ManagerBookLIstController {
         String searchAtt=searchAttribute.getText();
         if(searchAtt!=""&&searchBy!=""){
             //call search function
+            //implement me
         }
     }
 }

@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HelloController {
+    WindowChanger changer=new WindowChanger();
     @FXML
     private Label welcomeText;
     @FXML
@@ -52,26 +53,16 @@ public class HelloController {
         String regex = "^(.+)@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher isValidEmail = pattern.matcher(email); // add erroe msg
+
         boolean logged =false;
-        if(isManager){
-            logged=true;
-        }else{
-            logged=true;
-        }
+        //implement me
+        //log user and check his email and password set logged --> true
+
+
         if(logged) {
-            try {
                 ((Node)(event.getSource())).getScene().getWindow().hide();
-                Stage stage = new Stage();
-                FXMLLoader loggedInFxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoggedInUser.fxml"));
-                LoggedInUserController controller=new LoggedInUserController();
-                loggedInFxmlLoader.setController(controller);
-                Scene scene = new Scene(loggedInFxmlLoader.load(), 200, 300);
-                stage.setTitle("welcome customer");
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                changer.changeWindow("LoggedInUser.fxml",new LoggedInUserController());
+
         }
     }
 }

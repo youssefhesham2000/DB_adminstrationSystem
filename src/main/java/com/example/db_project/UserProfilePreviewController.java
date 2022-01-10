@@ -8,6 +8,7 @@ import service.UserValidator;
 
 public class UserProfilePreviewController {
     private boolean stateChanged=false;
+    WindowChanger changer=new WindowChanger();
     @FXML
     private TextField firstName;
     @FXML
@@ -20,22 +21,16 @@ public class UserProfilePreviewController {
     private TextField shippingAddress;
     @FXML
     public void initialize(){
+        //implement me
+        //get logged user
         User logged=new User();//acess user data using singelton
-        logged.firstName="test";
-        logged.lastName="tesfas";
-        logged.shippingAddress="safsgh";
-        logged.phoneNumber="1841";
-        logged.email="yousa@yahoo.com";
         firstName.setText(logged.firstName);
         lastName.setText(logged.lastName);
         Email.setText(logged.email);
         phoneNumber.setText(logged.phoneNumber);
         shippingAddress.setText(logged.shippingAddress);
     }
-    public User getUserInfo(){
-        //get user from apllication logic
-    return null;
-    }
+
     public void setStateChanged(){
         stateChanged=true;
     }
@@ -50,15 +45,18 @@ public class UserProfilePreviewController {
                 newUser.lastName = lastName.getText();
                 newUser.phoneNumber = phoneNumber.getText();
                 newUser.shippingAddress = shippingAddress.getText();
+                //implement me
+                // update user information
             }else {
                 //show error msg
+                changer.createMSGWindow("InValid Inputs");
+
             }
 
         }
     }
     public void changePassword(){
-        WindowChanger changer=new WindowChanger();
-        ChangePasswordController controller=new ChangePasswordController();
-        changer.changeWindow("ChangePasswordPanel",controller);
+
+        changer.changeWindow("ChangePasswordPanel",new ChangePasswordController());
     }
 }

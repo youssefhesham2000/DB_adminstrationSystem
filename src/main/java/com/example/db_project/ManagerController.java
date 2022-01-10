@@ -24,6 +24,7 @@ public class ManagerController {
         String email=emailToPromote.getText();
         boolean found=true;
         //search for the email if found set found to true and promote it
+        //implement me
         String msg =found?  "promoted" : "email not found";
 
         changer.createMSGWindow(msg);
@@ -40,8 +41,8 @@ public class ManagerController {
             int quantity = Integer.parseInt(orderQuantity.getText());
             LocalDate deliveryDate=DeliveryDate.getValue();
             boolean found=true;
-            // add TO DB
-
+            // add order TO DB
+            //implement me
             //if ISBN not found set bool found to false
             if(!found)
                 changer.createMSGWindow("book not found");
@@ -57,5 +58,6 @@ public class ManagerController {
     }
     public void viewReportsIsClicked(){
         //handle jasper  report generator code here
+        //implement me
     }
 }

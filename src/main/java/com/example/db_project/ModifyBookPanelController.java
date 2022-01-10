@@ -57,7 +57,8 @@ public class ModifyBookPanelController {
             if ( validator.isValidBook(bookISBN.getText(),bookTitle.getText(),bookIPublisherID.getText(),bookPublicationYear.getText(),bookCategory.getText(),bookPrice.getText())){
                Book newBook=utils.convertToBook(bookISBN.getText(),bookTitle.getText(),bookIPublisherID.getText(),bookPublicationYear.getText(),bookCategory.getText(),bookPrice.getText());
                Book oldBook=utils.convertToBook(oldBookISBN,oldTitle,oldPublisherID,oldPublicationYear,oldCategory,oldPrice);
-               //update
+               //update book
+                //implement me
             }else {
                 //show error msg
                 changer.createMSGWindow("INvalid Attributes");
