@@ -53,9 +53,9 @@ public class ManagerController {
             changer.createMSGWindow("wrong attributes");
         }
     }
-    public void enterModifyList(){
+    /*public void enterModifyList(){
         changer.changeWindow("ManagerBookList.fxml",new ManagerBookLIstController());
-    }
+    }*/
     public void viewReportsIsClicked(){
         //handle jasper  report generator code here
         //implement me
