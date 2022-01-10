@@ -6,9 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Book;
-import model.BookCategory;
-import model.CartItem;
+import model.*;
 import service.ApplicationLogic;
 import service.BookManager;
 import service.CartManager;
@@ -21,6 +19,7 @@ public class LoggedInUserController {
     ApplicationLogic applicationLogic = ApplicationLogic.getInstance();
     BookManager bookManager = applicationLogic.bookManager;
     CartManager cartManager = applicationLogic.cartManager;
+    User logged=ApplicationLogic.getInstance().loggedInUser;
 
 
     private String searchBy="";
@@ -56,7 +55,7 @@ public class LoggedInUserController {
         bookPrice.setCellValueFactory(new PropertyValueFactory<Book, Double>("sellingPrice"));
 
         utils.addTOCartButtonToTable("Add To Cart",bookTable,new LoggedInUserController());
-        boolean manager=true;
+        boolean manager= UserRole.getUserRoleIndex(logged.role);
         if(!manager)
             managementButton.setVisible(false);
         else
