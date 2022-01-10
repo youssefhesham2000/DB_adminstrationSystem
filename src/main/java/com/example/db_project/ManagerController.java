@@ -75,7 +75,7 @@ public class ManagerController {
         orderTable.getItems().clear();
         //and re load orders data
 
-        utils.confirmOrderButtonToTable("Confirm Order",orderTable,new ManagerController());
+        utils.confirmOrderButtonToTable("Confirm Order",orderTable,this);
 
 
     }

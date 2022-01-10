@@ -104,14 +104,14 @@ public class GUIUtils {
 
     }
 
-    public void insertIncreaseQuantityButtonToTable(String textToDisplay, TableView<CartItem> table, CartController Controller) {
-        TableColumn<CartItem, String> colBtn = new TableColumn("increase Button Column");
-        Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>> cellFactory
+    public void insertIncreaseQuantityButtonToTable(String textToDisplay, TableView<CartItemView> table, CartController Controller) {
+        TableColumn<CartItemView, String> colBtn = new TableColumn("increase Button Column");
+        Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>> cellFactory
                 = //
-                new Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>>() {
+                new Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<CartItem, String> param) {
-                        final TableCell<CartItem, String> cell = new TableCell<CartItem, String>() {
+                    public TableCell call(final TableColumn<CartItemView, String> param) {
+                        final TableCell<CartItemView, String> cell = new TableCell<CartItemView, String>() {
 
                             final Button btn = new Button(textToDisplay);
 
@@ -123,7 +123,7 @@ public class GUIUtils {
                                     setText(null);
                                 } else {
                                     btn.setOnAction(event -> {
-                                        CartItem Item = getTableView().getItems().get(getIndex());
+                                        CartItemView Item = getTableView().getItems().get(getIndex());
                                         Controller.increaseQuantity(Item);
                                     });
                                     setGraphic(btn);

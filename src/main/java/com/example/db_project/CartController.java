@@ -1,7 +1,9 @@
 package com.example.db_project;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -42,7 +44,7 @@ public class CartController {
             AlertMessage.showError("Failed to get user cart");
         }
 
-        utils.removeCartItemViewToTable("remove Item",cartTable,new CartController());
+        utils.removeCartItemViewToTable("remove Item",cartTable,this);
         double cartPrice=0;
         totalPrice.setText(Double.toString(cartPrice));
     }
@@ -59,13 +61,13 @@ public class CartController {
         //remove from DB
         cartTable.getItems().clear();
         //get all cart objects and load it to table again
-        utils.removeCartItemViewToTable("remove Item",cartTable,new CartController());
+        utils.removeCartItemViewToTable("remove Item",cartTable,this);
     }
-    public void increaseQuantity(CartItem selectedItem){
+    public void increaseQuantity(CartItemView selectedItem){
         System.out.println(selectedItem.ISBN);
         //update DB
         cartTable.getItems().clear();
         //get all cart objects and load it to table again
-        utils.removeCartItemToTable("remove Item",cartTable,new CartController());
+        //utils.removeCartItemToTable("remove Item",cartTable,this);
     }
 }
