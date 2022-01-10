@@ -7,6 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import model.Book;
+import model.BookCategory;
 import model.CartItemView;
 import model.Order;
 
@@ -18,7 +19,7 @@ public class GUIUtils {
         newBook.publisherID=Integer.parseInt(PublisherID);
         newBook.publicationYear=Integer.parseInt(PublicationYear);
         newBook.sellingPrice=Double.parseDouble(price);
-        //newBook.category=new BookCategory(bookCategory.getText()); category is not yet determined how to handle it
+        newBook.category= BookCategory.valueOf(Category);
         return newBook;
     }
     public String[]convertBookToStrings(Book book){
@@ -67,6 +68,8 @@ public class GUIUtils {
         table.getColumns().add(colBtn);
 
     }
+
+
     public void removeCartItemViewToTable(String textToDisplay, TableView<CartItemView> table, CartController Controller) {
         TableColumn<CartItemView, String> colBtn = new TableColumn("Button Column");
         Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>> cellFactory
@@ -103,14 +106,14 @@ public class GUIUtils {
 
     }
 
-    public void insertIncreaseQuantityButtonToTable(String textToDisplay, TableView<CartItem> table, CartController Controller) {
-        TableColumn<CartItem, String> colBtn = new TableColumn("increase Button Column");
-        Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>> cellFactory
+    public void insertIncreaseQuantityButtonToTable(String textToDisplay, TableView<CartItemView> table, CartController Controller) {
+        TableColumn<CartItemView, String> colBtn = new TableColumn("increase Button Column");
+        Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>> cellFactory
                 = //
-                new Callback<TableColumn<CartItem, String>, TableCell<CartItem, String>>() {
+                new Callback<TableColumn<CartItemView, String>, TableCell<CartItemView, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<CartItem, String> param) {
-                        final TableCell<CartItem, String> cell = new TableCell<CartItem, String>() {
+                    public TableCell call(final TableColumn<CartItemView, String> param) {
+                        final TableCell<CartItemView, String> cell = new TableCell<CartItemView, String>() {
 
                             final Button btn = new Button(textToDisplay);
 
@@ -122,7 +125,7 @@ public class GUIUtils {
                                     setText(null);
                                 } else {
                                     btn.setOnAction(event -> {
-                                        CartItem Item = getTableView().getItems().get(getIndex());
+                                        CartItemView Item = getTableView().getItems().get(getIndex());
                                         Controller.increaseQuantity(Item);
                                     });
                                     setGraphic(btn);
@@ -138,6 +141,8 @@ public class GUIUtils {
         table.getColumns().add(colBtn);
 
     }
+
+
     public void confirmOrderButtonToTable(String textToDisplay, TableView<Order> table, ManagerController Controller) {
         TableColumn<Order, String> colBtn = new TableColumn("Button Column");
         Callback<TableColumn<Order, String>, TableCell<Order, String>> cellFactory

@@ -32,7 +32,7 @@ public class CartManager {
     public boolean updateCartItem(CartItem oldCartItem, CartItem newCartItem) throws SQLException {
         String query = "UPDATE CART " +
                 "SET quantity=? " +
-                "WHERE userID=?,ISBN=?";
+                "WHERE userID=? AND ISBN=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setInt(1, newCartItem.quantity);
         statement.setInt(2, oldCartItem.userID);
@@ -43,7 +43,7 @@ public class CartManager {
     }
 
     public boolean deleteCartItem(CartItem cartItem) throws SQLException {
-        String query = "DELETE FROM CART WHERE userID=?, ISBN=?";
+        String query = "DELETE FROM CART WHERE userID=? AND ISBN=?";
         PreparedStatement statement = dbConnection.getPreparedStatement(query);
         statement.setInt(1, cartItem.userID);
         statement.setString(2, cartItem.ISBN);
